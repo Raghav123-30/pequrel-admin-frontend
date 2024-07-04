@@ -9,6 +9,7 @@
 	import { superForm } from 'sveltekit-superforms';
 
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 	const { productData } = data;
@@ -37,6 +38,7 @@
 		if (productData) {
 			form.set(productData);
 		} else {
+			goto('/error');
 			pageError = true;
 			console.log('error');
 		}

@@ -28,7 +28,6 @@ export async function getData<T>(url: string): Promise<ApiData<T>> {
 }
 
 export async function postData<T>(url: string, body: T): Promise<ApiData<T>> {
-	console.log(BASE_URL + url);
 	try {
 		const response = await fetch(BASE_URL + url, {
 			method: 'POST',
@@ -91,10 +90,7 @@ export async function putData<T>(url: string, body: T): Promise<ApiData<T>> {
 export async function deleteData<T>(url: string): Promise<ApiData<T>> {
 	try {
 		const response = await fetch(BASE_URL + url, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			method: 'DELETE'
 		});
 
 		if (!response.ok) {
@@ -105,6 +101,7 @@ export async function deleteData<T>(url: string): Promise<ApiData<T>> {
 		}
 
 		const result = await response.json();
+		console.log(result);
 		const apiData: ApiData<T> = {
 			data: result,
 			error: false

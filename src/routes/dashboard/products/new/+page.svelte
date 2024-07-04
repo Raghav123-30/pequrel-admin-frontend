@@ -3,7 +3,6 @@
 
 	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
-	import SuperDebug from 'sveltekit-superforms';
 	import type { Product } from '$lib/models/product';
 	import toastStore from '$lib/stores/toastStore';
 	import { zod } from 'sveltekit-superforms/adapters';
@@ -37,7 +36,6 @@
 </script>
 
 <div class="px-8 py-20">
-	<SuperDebug data={form} />
 	<Card class="mx-auto my-4 max-w-3xl">
 		<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 			Add new product

@@ -7,7 +7,7 @@
 
 <Navbar />
 {#if $navigating}
-	<div class="grid min-h-screen place-items-center">
+	<div class="center">
 		<Spinner color="blue" class=" mx-auto h-24 w-24 " />
 	</div>
 {:else}
