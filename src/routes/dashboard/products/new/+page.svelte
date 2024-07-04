@@ -106,6 +106,7 @@
 			<div class="space-y-4">
 				<Label>Product area</Label>
 				<Input
+					step="any"
 					type="number"
 					name="productArea"
 					bind:value={$form.productArea}
@@ -118,6 +119,7 @@
 			<div class="space-y-4">
 				<Label>Drying area</Label>
 				<Input
+					step="any"
 					name="dryingArea"
 					type="number"
 					bind:value={$form.dryingArea}

@@ -7,11 +7,13 @@
 		TableBodyRow,
 		TableHead,
 		TableHeadCell,
-		TableSearch
+		TableSearch,
+		Button,
+		Tooltip
 	} from 'flowbite-svelte';
 	import type { Product } from '$lib/models/product';
 
-	import { RocketSolid } from 'flowbite-svelte-icons';
+	import { RocketSolid, CirclePlusSolid, EditSolid, TrashBinSolid } from 'flowbite-svelte-icons';
 
 	let searchTerm = '';
 	export let products: Product[];
@@ -31,6 +33,14 @@
 		</p>
 	</Card>
 	<div class="mx-auto max-w-6xl">
+		<div class="my-4 flex justify-end">
+			<Button outline>
+				<a href="/dashboard/products/new">
+					<CirclePlusSolid />
+				</a>
+			</Button>
+			<Tooltip>Add new product</Tooltip>
+		</div>
 		<Table>
 			<TableSearch
 				placeholder="Search by product name"
@@ -47,6 +57,7 @@
 				<TableHeadCell>No of trays</TableHeadCell>
 				<TableHeadCell>Product area</TableHeadCell>
 				<TableHeadCell>Drying area</TableHeadCell>
+				<TableHeadCell>Actions</TableHeadCell>
 			</TableHead>
 			<TableBody>
 				{#each filteredProducts as product}
@@ -65,6 +76,22 @@
 						<TableHeadCell>{product.numTrays}</TableHeadCell>
 						<TableHeadCell>{product.productArea}</TableHeadCell>
 						<TableHeadCell>{product.dryingArea}</TableHeadCell>
+						<TableHeadCell>
+							<div class="flex gap-2">
+								<button class="p-2 hover:bg-white/50">
+									<a href={`/dashboard/products/${product.productId}/edit`}>
+										<EditSolid />
+										<Tooltip>Edit product details</Tooltip>
+									</a>
+								</button>
+								<form>
+									<button class="p-2 hover:bg-white/50">
+										<TrashBinSolid />
+										<Tooltip>Delete product</Tooltip>
+									</button>
+								</form>
+							</div>
+						</TableHeadCell>
 					</TableBodyRow>
 				{/each}
 			</TableBody>
