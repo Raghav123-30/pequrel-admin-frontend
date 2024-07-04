@@ -7,7 +7,7 @@ export type Product = {
 	numLayers: number;
 	numTrays: number;
 	numRacks: number;
-	productMaterialDescription: string;
+	trayMaterialDescription: string;
 	productElectronicDescription: string;
 	numCustomers?: number;
 };
