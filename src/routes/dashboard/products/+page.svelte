@@ -25,6 +25,9 @@
 					show: true,
 					type: 'success'
 				});
+				setTimeout(() => {
+					window.location.reload();
+				}, 2000);
 			}
 		}
 	});
