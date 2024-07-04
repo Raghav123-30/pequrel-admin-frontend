@@ -101,7 +101,7 @@ export async function deleteData<T>(url: string): Promise<ApiData<T>> {
 		}
 
 		const result = await response.json();
-		console.log(result);
+
 		const apiData: ApiData<T> = {
 			data: result,
 			error: false

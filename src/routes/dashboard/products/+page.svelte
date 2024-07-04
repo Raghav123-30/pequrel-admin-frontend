@@ -4,9 +4,8 @@
 	const { products, error } = data;
 	import { Toast } from 'flowbite-svelte';
 	import { superForm } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
-	import { invalidate, invalidateAll } from '$app/navigation';
-	const { form, enhance, errors, submitting, message } = superForm(data.form, {
+
+	const { form, enhance, submitting } = superForm(data.form, {
 		applyAction: true,
 		invalidateAll: 'force',
 		onResult: ({ result }) => {
@@ -78,7 +77,6 @@
 	{#if error}
 		<p>Could not fetch products</p>
 	{:else}
-		<SuperDebug data={form} />
 		<Card class="mx-auto my-4 flex max-w-6xl flex-row items-center justify-between">
 			<p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
 				<span class="me-3 inline-flex rounded-full bg-gray-200 p-1 dark:bg-gray-600">
@@ -146,7 +144,7 @@
 												class="p-2 hover:bg-white/50"
 												on:click={() => {
 													showModal = true;
-													console.log(product.productId);
+
 													form.set({ productId: product.productId || 'ERROR' });
 												}}
 											>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import toastStore from '$lib/stores/toastStore';
-	import SuperDebug from 'sveltekit-superforms';
+
 	import { Card, Input, Label, Button, Helper, Select, Textarea, Toast } from 'flowbite-svelte';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { productSchema } from '$lib/schemas/productSchema';
@@ -13,7 +13,7 @@
 
 	export let data: PageData;
 	const { productData } = data;
-	console.log(data);
+
 	let pageError = false;
 	const { form, enhance, errors, submitting, message } = superForm(data.form, {
 		validators: zod(productSchema),
@@ -40,7 +40,6 @@
 		} else {
 			goto('/error');
 			pageError = true;
-			console.log('error');
 		}
 	});
 </script>
@@ -49,7 +48,6 @@
 	<p>Invalid product</p>
 {:else}
 	<div class="px-8 py-20">
-		<SuperDebug data={form} />
 		<Card class="mx-auto my-4 max-w-3xl">
 			<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 				Add new product

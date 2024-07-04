@@ -40,7 +40,7 @@ export const actions: Actions = {
 			const deleteResult = await fetch(`${BACKEND_URL}/api/products/${productId}`, {
 				method: 'DELETE'
 			});
-			console.log(deleteResult);
+
 			if (!deleteResult.ok) {
 				return message(form, 'Could not delete your product.Please try again later', {
 					status: 403
