@@ -21,7 +21,7 @@
 		onResult: ({ result }) => {
 			if (result.type === 'redirect') {
 				toastStore.set({
-					page: 'products',
+					page: 'customers',
 					message: 'New customer has been added',
 					show: true,
 					type: 'success'

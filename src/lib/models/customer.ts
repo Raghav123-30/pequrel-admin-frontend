@@ -1,5 +1,10 @@
 import type { Configuration } from './configuration';
 
+type SetupConfigurationItem = {
+	productId: string;
+	configuration: Configuration;
+};
+
 export type Customer = {
 	customerId?: string;
 	productIds?: string[];
@@ -11,5 +16,5 @@ export type Customer = {
 	setupState: string;
 	setupCity: string;
 	setupAddress: string;
-	configuration?: Configuration;
+	setupConfigurations?: SetupConfigurationItem[];
 };
