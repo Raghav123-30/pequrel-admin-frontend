@@ -3,5 +3,5 @@
 </script>
 
 <div class="grid place-content-center">
-	<p>Details of product with id {$page.params.id} will be displayed here</p>
+	<p>Details of product with id {$page.params.productId} will be displayed here</p>
 </div>

@@ -1,12 +1,22 @@
 <script lang="ts">
 	export let form;
 	export let errors;
+
 	import { Country, State, City, type IState } from 'country-state-city';
 	import { Label, Input, Helper, Select, Textarea } from 'flowbite-svelte';
+
 	const countries = Country.getAllCountries();
 	const india = countries[100];
 	const states = State.getStatesOfCountry(india.isoCode);
 	let selectedState: IState;
+
+	if ($form.setupState) {
+		let currentState = states.find((state) => state.name === $form.setupState);
+		if (currentState) {
+			selectedState = currentState;
+		}
+	}
+
 	$: formattedCities = City.getCitiesOfState(india.isoCode, selectedState?.isoCode)?.map((item) => {
 		return {
 			value: item.name,

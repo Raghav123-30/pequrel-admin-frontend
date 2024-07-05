@@ -7,7 +7,7 @@ import type { Product } from '$lib/models/product.js';
 
 export const load = async ({ params, cookies }) => {
 	const form = await superValidate(zod(productSchema));
-	const result = await getData<Product>(`/api/products/${params.id}`);
+	const result = await getData<Product>(`/api/products/${params.productId}`);
 	const productData = result.data;
 	cookies.set('productName', productData?.productName || '', { httpOnly: true, path: '/' });
 	return {
@@ -48,9 +48,9 @@ export const actions: Actions = {
 						status: 403
 					});
 				} else {
-					const response = await putData(`/api/products/${params.id}`, {
+					const response = await putData(`/api/products/${params.productId}`, {
 						...productData,
-						productId: params.id
+						productId: params.productId
 					});
 					if (!response.error) {
 						throw redirect(300, '/dashboard/products');
