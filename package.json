@@ -47,6 +47,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"aws-amplify": "^6.3.8",
 		"svelte-french-toast": "^1.2.0"
 	}
 }
