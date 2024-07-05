@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { Label, Input, Helper } from 'flowbite-svelte';
-
 	export let form;
 	export let errors;
+	import { Label, Input, Helper } from 'flowbite-svelte';
 </script>
 
 <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">

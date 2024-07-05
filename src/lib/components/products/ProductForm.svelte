@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Label, Input, Helper, Select, Textarea } from 'flowbite-svelte';
-
 	export let form;
 	export let errors;
+
+	import { Label, Input, Helper, Select, Textarea } from 'flowbite-svelte';
+
 	let productTypes = [
 		{ value: 0, name: 'Drying' },
 		{ value: 1, name: 'Drying+Growing' }
