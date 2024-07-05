@@ -39,28 +39,28 @@
 		}
 	});
 	const checkIsNextForCropDataDisabled = async () => {
-		const errors = await validateForm({ schema: zod(cropDataSchema), update: true });
-		console.log(errors);
-		return errors.valid;
+		const result = await validateForm({ schema: zod(cropDataSchema), update: true });
+
+		return result.valid;
 	};
 	const checkIsNextForCeilingConfigFormDisabled = async () => {
 		const result = await validateForm({ schema: zod(ceilingConfigSchema), update: true });
-		console.log(errors);
+
 		return result.valid;
 	};
 	const checkIsNextForTopExhaustConfigFormDisabled = async () => {
 		const result = await validateForm({ schema: zod(topExhaustConfigSchema), update: true });
-		console.log(errors);
+
 		return result.valid;
 	};
 	const checkIsNextForBottomExhaustConfigFormDisabled = async () => {
 		const result = await validateForm({ schema: zod(bottomExhaustConfigSchema), update: true });
-		console.log(errors);
+
 		return result.valid;
 	};
 	const checkIsNextForHorizontalConfigFormDisabled = async () => {
 		const result = await validateForm({ schema: zod(horizontalAirflowConfigSchema), update: true });
-		console.log(errors);
+
 		return result.valid;
 	};
 
@@ -177,7 +177,6 @@
 						on:click={async () => {
 							const valid = await checkIsNextForCropDataDisabled();
 							if (valid) {
-								console.log(`errors ${errors}`);
 								step += 1;
 							}
 						}}>Next</Button

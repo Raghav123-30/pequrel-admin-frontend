@@ -62,6 +62,7 @@
 	);
 	import { onDestroy } from 'svelte';
 	import toastStore from '$lib/stores/toastStore';
+	import DisplayError from '$lib/components/utils/DisplayError.svelte';
 
 	onDestroy(() => {
 		toastStore.set({
@@ -75,7 +76,7 @@
 
 <div>
 	{#if error}
-		<p>Could not fetch products</p>
+		<DisplayError message="Error fetching products from the server.Please try again later" />
 	{:else}
 		<Card class="mx-auto my-4 flex max-w-6xl flex-row items-center justify-between">
 			<p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
