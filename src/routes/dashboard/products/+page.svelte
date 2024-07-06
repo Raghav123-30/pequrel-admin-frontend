@@ -5,18 +5,11 @@
 	import { Toast } from 'flowbite-svelte';
 	import { superForm } from 'sveltekit-superforms';
 
-	const { form, enhance, submitting } = superForm(data.form, {
+	const { form, enhance, submitting, message, errors, allErrors } = superForm(data.form, {
 		applyAction: true,
 		invalidateAll: 'force',
-		onResult: ({ result }) => {
-			if (result.type == 'failure') {
-				toastStore.set({
-					message: 'Failed to delete product',
-					page: 'products',
-					show: true,
-					type: 'error'
-				});
-			} else if (result.type == 'success') {
+		onResult: async ({ result }) => {
+			if (result.type == 'success') {
 				toastStore.set({
 					message: 'Deleted product successfully',
 					page: 'products',
@@ -29,7 +22,12 @@
 			}
 		}
 	});
-	import { CheckCircleSolid, RocketSolid, CirclePlusSolid } from 'flowbite-svelte-icons';
+	import {
+		CheckCircleSolid,
+		RocketSolid,
+		CirclePlusSolid,
+		ExclamationCircleSolid
+	} from 'flowbite-svelte-icons';
 
 	import { Card, Tooltip } from 'flowbite-svelte';
 
@@ -37,7 +35,16 @@
 	import toastStore from '$lib/stores/toastStore';
 	import DisplayError from '$lib/components/utils/DisplayError.svelte';
 	import DisplayProducts from '$lib/components/products/DisplayProducts.svelte';
-
+	message.subscribe((value) => {
+		if (value) {
+			toastStore.set({
+				message: value,
+				page: 'products',
+				show: true,
+				type: 'error'
+			});
+		}
+	});
 	onDestroy(() => {
 		toastStore.set({
 			page: '#',
@@ -83,10 +90,13 @@
 
 {#if $toastStore.show && $toastStore.page === 'products'}
 	<div class="fixed bottom-10 right-10">
-		<Toast color="green">
+		<Toast color={$toastStore.type == 'error' ? 'red' : 'green'}>
 			<svelte:fragment slot="icon">
-				<CheckCircleSolid class="h-5 w-5" />
-				<span class="sr-only">Check icon</span>
+				{#if $toastStore.type == 'error'}
+					<ExclamationCircleSolid class="h-5 w-5" />
+				{:else}
+					<CheckCircleSolid class="h-5 w-5" />
+				{/if}
 			</svelte:fragment>
 			{$toastStore.message}
 		</Toast>

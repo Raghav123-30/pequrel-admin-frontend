@@ -6,6 +6,7 @@ import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import type { Customer } from '$lib/models/customer';
 
 const productIdSchema = z.object({
 	productId: z.string().min(1, { message: 'Provide valid product ID please' })
@@ -40,11 +41,29 @@ export const actions: Actions = {
 			const deleteResult = await fetch(`${BACKEND_URL}/api/products/${productId}`, {
 				method: 'DELETE'
 			});
+			console.log(deleteResult);
 
 			if (!deleteResult.ok) {
-				return message(form, 'Could not delete your product.Please try again later', {
-					status: 403
-				});
+				if (deleteResult.status === 409) {
+					const customersUsingProduct = (await deleteResult.json()) as Customer[];
+					const customerNames = customersUsingProduct.map((customer) => customer.customerName);
+
+					return message(
+						form,
+						`Cannot delete this product as the following customer/s are using this product.
+					  
+					  ${customerNames.join(', ')}
+					  
+					  `,
+						{
+							status: 403
+						}
+					);
+				} else {
+					return message(form, 'Could not delete your product.Please try again later', {
+						status: 403
+					});
+				}
 			} else {
 				return message(form, 'Deleted product successfully');
 			}
