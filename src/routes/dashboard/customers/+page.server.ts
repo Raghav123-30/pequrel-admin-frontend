@@ -6,6 +6,7 @@ import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import type { Product } from '$lib/models/product';
 
 const customerIdSchema = z.object({
 	customerId: z.string().min(1, { message: 'Provide valid customer ID please' })
@@ -13,18 +14,21 @@ const customerIdSchema = z.object({
 
 export const load: PageServerLoad = async () => {
 	const customersData = await getData<Customer[]>('/api/customers');
+	const productsData = await getData<Product[]>('/api/products');
 	const form = await superValidate(zod(customerIdSchema));
-	if (customersData.error) {
+	if (customersData.error || productsData.error) {
 		return {
 			form: form,
 			error: true,
-			customers: [] as Customer[]
+			customers: [] as Customer[],
+			products: [] as Product[]
 		};
 	} else {
 		return {
 			form: form,
 			error: false,
-			customers: customersData.data || ([] as Customer[])
+			customers: customersData.data || ([] as Customer[]),
+			products: productsData.data || ([] as Product[])
 		};
 	}
 };
