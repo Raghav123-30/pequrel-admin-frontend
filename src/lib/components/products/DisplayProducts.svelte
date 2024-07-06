@@ -14,9 +14,16 @@
 		Tooltip,
 		TableSearch,
 		Modal,
-		Button
+		Button,
+		Card
 	} from 'flowbite-svelte';
-	import { EditSolid, TrashBinSolid, ExclamationCircleOutline } from 'flowbite-svelte-icons';
+	import {
+		EditSolid,
+		TrashBinSolid,
+		ExclamationCircleOutline,
+		RocketSolid,
+		CirclePlusSolid
+	} from 'flowbite-svelte-icons';
 	let searchTerm = '';
 	let productToBeDeleted = '';
 	let showModal = false;
@@ -32,66 +39,93 @@
 </script>
 
 <div class="px-8 py-20">
-	<div class="mx-auto max-w-6xl">
-		<Table>
-			<TableSearch
-				placeholder="Search by product name"
-				hoverable={true}
-				bind:inputValue={searchTerm}
-			/>
-			<TableHead>
-				<!--				<TableHeadCell>ID</TableHeadCell>-->
-				<TableHeadCell>Name</TableHeadCell>
-				<TableHeadCell>Number of customers</TableHeadCell>
-				<TableHeadCell>Type</TableHeadCell>
-				<TableHeadCell>No of layers</TableHeadCell>
-				<TableHeadCell>No of racks</TableHeadCell>
-				<TableHeadCell>No of trays</TableHeadCell>
-				<TableHeadCell>Product area</TableHeadCell>
-				<TableHeadCell>Drying area</TableHeadCell>
-				<TableHeadCell>Actions</TableHeadCell>
-			</TableHead>
-			<TableBody>
-				{#each filteredProducts as product}
-					<TableBodyRow>
-						<!--						<TableBodyCell>{product.productId}</TableBodyCell>-->
-						<TableBodyCell>
-							{product.productName}
-						</TableBodyCell>
-						<TableBodyCell>{product.numCustomers ? product.numCustomers : 0}</TableBodyCell>
-						<TableBodyCell>{product.productType === 0 ? 'Drying' : 'Drying+Growing'}</TableBodyCell>
-						<TableBodyCell>{product.numLayers}</TableBodyCell>
-						<TableBodyCell>{product.numRacks}</TableBodyCell>
-						<TableHeadCell>{product.numTrays}</TableHeadCell>
-						<TableHeadCell>{product.productArea}</TableHeadCell>
-						<TableHeadCell>{product.dryingArea}</TableHeadCell>
-						<TableHeadCell>
-							<div class="flex gap-2">
-								<button class="p-2 hover:bg-white/50">
-									<a href={`/dashboard/products/${product.productId}/edit`}>
-										<EditSolid />
-										<Tooltip>Edit product details</Tooltip>
-									</a>
-								</button>
+	<Card class="mx-auto my-4 flex max-w-6xl flex-row items-center justify-between">
+		<p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
+			<span class="me-3 inline-flex rounded-full bg-gray-200 p-1 dark:bg-gray-600">
+				<RocketSolid class="h-3 w-3 text-gray-500 dark:text-gray-400" />
+				<span class="sr-only">Light bulb</span>
+			</span>
+			<span> All the registered A3S products </span>
+		</p>
 
-								<button
-									class="p-2 hover:bg-white/50"
-									on:click={() => {
-										showModal = true;
-										productToBeDeleted = product.productName;
-										form.set({ productId: product.productId || 'ERROR' });
-									}}
-								>
-									<TrashBinSolid />
-									<Tooltip>Delete product</Tooltip>
-								</button>
-							</div>
-						</TableHeadCell>
-					</TableBodyRow>
-				{/each}
-			</TableBody>
-		</Table>
-	</div>
+		<div>
+			<a href="/dashboard/products/new">
+				<CirclePlusSolid />
+			</a>
+
+			<Tooltip>Add new product</Tooltip>
+		</div>
+	</Card>
+	{#if products.length}
+		<div class="mx-auto max-w-6xl">
+			<Table>
+				<TableSearch
+					placeholder="Search by product name"
+					hoverable={true}
+					bind:inputValue={searchTerm}
+				/>
+				<TableHead>
+					<!--				<TableHeadCell>ID</TableHeadCell>-->
+					<TableHeadCell>Name</TableHeadCell>
+					<TableHeadCell>Number of customers</TableHeadCell>
+					<TableHeadCell>Type</TableHeadCell>
+					<TableHeadCell>No of layers</TableHeadCell>
+					<TableHeadCell>No of racks</TableHeadCell>
+					<TableHeadCell>No of trays</TableHeadCell>
+					<TableHeadCell>Product area</TableHeadCell>
+					<TableHeadCell>Drying area</TableHeadCell>
+					<TableHeadCell>Actions</TableHeadCell>
+				</TableHead>
+				<TableBody>
+					{#each filteredProducts as product}
+						<TableBodyRow>
+							<!--						<TableBodyCell>{product.productId}</TableBodyCell>-->
+							<TableBodyCell>
+								{product.productName}
+							</TableBodyCell>
+							<TableBodyCell>{product.numCustomers ? product.numCustomers : 0}</TableBodyCell>
+							<TableBodyCell
+								>{product.productType === 0 ? 'Drying' : 'Drying+Growing'}</TableBodyCell
+							>
+							<TableBodyCell>{product.numLayers}</TableBodyCell>
+							<TableBodyCell>{product.numRacks}</TableBodyCell>
+							<TableHeadCell>{product.numTrays}</TableHeadCell>
+							<TableHeadCell>{product.productArea}</TableHeadCell>
+							<TableHeadCell>{product.dryingArea}</TableHeadCell>
+							<TableHeadCell>
+								<div class="flex gap-2">
+									<button class="p-2 hover:bg-white/50">
+										<a href={`/dashboard/products/${product.productId}/edit`}>
+											<EditSolid />
+											<Tooltip>Edit product details</Tooltip>
+										</a>
+									</button>
+
+									<button
+										class="p-2 hover:bg-white/50"
+										on:click={() => {
+											showModal = true;
+											productToBeDeleted = product.productName;
+											form.set({ productId: product.productId || 'ERROR' });
+										}}
+									>
+										<TrashBinSolid />
+										<Tooltip>Delete product</Tooltip>
+									</button>
+								</div>
+							</TableHeadCell>
+						</TableBodyRow>
+					{/each}
+				</TableBody>
+			</Table>
+		</div>
+	{:else}
+		<Card color="green" class="center mx-auto max-w-6xl">
+			<p class="text-center">
+				No A3S products are added yet click on the plus icon on the toolbar to add new product
+			</p>
+		</Card>
+	{/if}
 </div>
 
 <Modal title="Are you absolutely sure?" bind:open={showModal} size="xs">

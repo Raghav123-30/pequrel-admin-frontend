@@ -59,32 +59,7 @@
 	{#if error}
 		<DisplayError message="Error fetching products from the server.Please try again later" />
 	{:else}
-		<Card class="mx-auto my-4 flex max-w-6xl flex-row items-center justify-between">
-			<p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
-				<span class="me-3 inline-flex rounded-full bg-gray-200 p-1 dark:bg-gray-600">
-					<RocketSolid class="h-3 w-3 text-gray-500 dark:text-gray-400" />
-					<span class="sr-only">Light bulb</span>
-				</span>
-				<span> All the registered A3S products </span>
-			</p>
-
-			<div>
-				<a href="/dashboard/products/new">
-					<CirclePlusSolid />
-				</a>
-
-				<Tooltip>Add new product</Tooltip>
-			</div>
-		</Card>
-		{#if products.length > 0}
-			<DisplayProducts {form} {enhance} {submitting} {products} />
-		{:else}
-			<Card color="green" class="center mx-auto max-w-6xl">
-				<p class="text-center">
-					No A3S products are added yet click on the plus icon on the toolbar to add new product
-				</p>
-			</Card>
-		{/if}
+		<DisplayProducts {form} {enhance} {submitting} {products} />
 	{/if}
 </div>
 

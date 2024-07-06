@@ -5,6 +5,7 @@ import type { Customer } from '$lib/models/customer.js';
 export const load = async ({ params }) => {
 	const productsData = await getData<Product[]>(`/api/products`);
 	const customerData = await getData<Customer>(`/api/customers/${params.customerId}`);
+
 	if (productsData.error || customerData.error) {
 		return {
 			error: true,

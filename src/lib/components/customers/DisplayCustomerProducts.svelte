@@ -1,11 +1,14 @@
 <script lang="ts">
 	import type { Customer } from '$lib/models/customer';
 	import type { Product } from '$lib/models/product';
-	export let allProducts: Product[];
-	export let customer: Customer;
+	export let productsData: Product[];
+	export let customerData: Customer;
+	export let form;
+	export let errors;
+	export let enhance;
 
-	const customerProducts = allProducts.filter((product) =>
-		customer.productIds?.includes(product.productId!)
+	const customerProducts = productsData.filter((product) =>
+		customerData.productIds?.includes(product.productId!)
 	);
 
 	import {
@@ -16,18 +19,52 @@
 		TableHead,
 		TableHeadCell,
 		Tooltip,
-		Card
+		Card,
+		Modal,
+		Button,
+		Select
 	} from 'flowbite-svelte';
+	import {
+		RocketSolid,
+		CirclePlusSolid,
+		ExclamationCircleOutline,
+		TrashBinSolid
+	} from 'flowbite-svelte-icons';
+	let showAddProductModal = false;
+	let showDeleteProductModal = false;
+	let productToDelete = '';
+
+	const productSelectionList = productsData.map((product) => {
+		return {
+			name: product.productName,
+			value: product.productId
+		};
+	});
 </script>
 
-<Card class="mx-auto max-w-6xl">
-	<div>
-		<div>
-			<p class="my-8 text-center font-semibold leading-tight text-gray-700 dark:text-gray-400">
-				All the products purchased by {customer.customerName}. You can add new product or remove the
-				existing ones.
-			</p>
+<Card class="mx-auto max-w-6xl px-4">
+	<Card class=" mx-auto my-4 flex max-w-6xl flex-row items-center justify-between gap-10">
+		<p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
+			<span class="me-3 inline-flex rounded-full bg-gray-200 p-1 dark:bg-gray-600">
+				<RocketSolid class="h-3 w-3 text-gray-500 dark:text-gray-400" />
+				<span class="sr-only">Light bulb</span>
+			</span>
+			<span>
+				Displays all the products purchased by {customerData.customerName}. You can add new product
+				or remove the existing ones.
+			</span>
+		</p>
 
+		<div>
+			<button on:click={() => (showAddProductModal = true)}>
+				<CirclePlusSolid />
+			</button>
+
+			<Tooltip>Add new product for Mr/Ms {customerData.customerName}</Tooltip>
+		</div>
+	</Card>
+	<div>
+		{#if customerProducts.length}
 			<Table>
 				<TableHead>
 					<!--				<TableHeadCell>ID</TableHeadCell>-->
@@ -39,11 +76,11 @@
 					<TableHeadCell>No of trays</TableHeadCell>
 					<TableHeadCell>Product area</TableHeadCell>
 					<TableHeadCell>Drying area</TableHeadCell>
+					<TableHeadCell>Actions</TableHeadCell>
 				</TableHead>
 				<TableBody>
 					{#each customerProducts as product}
 						<TableBodyRow>
-							<!--						<TableBodyCell>{product.productId}</TableBodyCell>-->
 							<TableBodyCell>
 								{product.productName}
 							</TableBodyCell>
@@ -56,10 +93,70 @@
 							<TableHeadCell>{product.numTrays}</TableHeadCell>
 							<TableHeadCell>{product.productArea}</TableHeadCell>
 							<TableHeadCell>{product.dryingArea}</TableHeadCell>
+							<TableHeadCell>
+								<button
+									on:click={() => {
+										productToDelete = product.productName;
+										$form.productId = product.productId;
+										showDeleteProductModal = true;
+									}}
+								>
+									<TrashBinSolid />
+								</button>
+								<Tooltip>Delete this product</Tooltip>
+							</TableHeadCell>
 						</TableBodyRow>
 					{/each}
 				</TableBody>
 			</Table>
-		</div>
+		{:else}
+			<Card color="green" class=" mx-auto max-w-6xl">
+				<p class="text-center">
+					No A3S products are added yet for customer ms/mr {customerData.customerName}. click on the
+					plus icon on the toolbar to add new product
+				</p>
+			</Card>
+		{/if}
 	</div>
 </Card>
+
+<div class="relative">
+	<Modal title="Product selection" bind:open={showAddProductModal} size="xs">
+		{#if customerProducts.length == 0}
+			<div class="flex flex-col items-center justify-center">
+				<ExclamationCircleOutline class="h-8 w-8" />
+				<p>Mr/Ms {customerData.customerName} has no products yet</p>
+			</div>
+		{:else}
+			<form use:enhance method="POST" action="?/deleteProduct">
+				<Select items={productSelectionList} name="productId" bind:value={$form.productId} />
+				<div class="my-4">
+					<Button disabled={!$form.productId} type="submit">Next</Button>
+					<Button color="alternative" on:click={() => (showAddProductModal = false)}>Cancel</Button>
+				</div>
+			</form>
+		{/if}
+	</Modal>
+</div>
+
+<div class="relative">
+	<Modal title="Are you sure?" bind:open={showDeleteProductModal} size="xs">
+		<div class="flex flex-col items-center justify-center">
+			<ExclamationCircleOutline class="h-8 w-8" />
+			<p>
+				By clicking confirm. Product {productToDelete} will no longer be associated in the record of
+				Mr/Ms {customerData.customerName}
+			</p>
+		</div>
+
+		<form use:enhance method="POST" action="?/deleteProduct">
+			<input name="productId" bind:value={$form.productId} class="hidden" />
+			<!-- //will be hidden using it for sake of server action -->
+			<div class="my-4">
+				<Button type="submit" disabled={!$form.productId}>Next</Button>
+				<Button color="alternative" on:click={() => (showDeleteProductModal = false)}>Cancel</Button
+				>
+			</div>
+		</form>
+	</Modal>
+</div>
