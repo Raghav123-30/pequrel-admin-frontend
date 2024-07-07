@@ -10,7 +10,7 @@
 	import { onMount } from 'svelte';
 
 	import DisplayError from '$lib/components/utils/DisplayError.svelte';
-	import { CustomerSchema } from '$lib/schemas/customerSchema';
+	import { customerSchema } from '$lib/schemas';
 	import CustomerForm from '$lib/components/customers/CustomerForm.svelte';
 
 	export let data: PageData;
@@ -18,7 +18,7 @@
 
 	let pageError = false;
 	const { form, enhance, errors, submitting, message } = superForm(data.form, {
-		validators: zod(CustomerSchema),
+		validators: zod(customerSchema),
 
 		onResult: ({ result }) => {
 			if (result.type === 'redirect') {

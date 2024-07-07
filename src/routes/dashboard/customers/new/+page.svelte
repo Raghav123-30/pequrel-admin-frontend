@@ -9,14 +9,14 @@
 	import { Toast } from 'flowbite-svelte';
 	import { CloseCircleSolid } from 'flowbite-svelte-icons';
 
-	import { CustomerSchema } from '$lib/schemas/customerSchema';
+	import { customerSchema } from '$lib/schemas/customerSchema';
 	import CustomerForm from '$lib/components/customers/CustomerForm.svelte';
 	import SuperDebug from 'sveltekit-superforms';
 
 	export let data: PageData;
 
 	const { form, enhance, errors, submitting, message } = superForm(data.form, {
-		validators: zod(CustomerSchema),
+		validators: zod(customerSchema),
 
 		onResult: ({ result }) => {
 			if (result.type === 'redirect') {

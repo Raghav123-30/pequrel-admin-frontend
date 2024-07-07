@@ -1,6 +1,6 @@
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { CustomerSchema } from '$lib/schemas/customerSchema';
+import { customerSchema } from '$lib/schemas/customerSchema';
 import { postData, getData } from '$lib/server/utils/DataService';
 import type { Actions } from '@sveltejs/kit';
 import { fail, message } from 'sveltekit-superforms';
@@ -8,7 +8,7 @@ import type { Customer } from '$lib/models/customer';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async () => {
-	const form = await superValidate(zod(CustomerSchema));
+	const form = await superValidate(zod(customerSchema));
 
 	return {
 		form: form
@@ -17,7 +17,7 @@ export const load = async () => {
 
 export const actions: Actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(CustomerSchema));
+		const form = await superValidate(request, zod(customerSchema));
 		const customerData = form.data;
 
 		if (!form.valid) {

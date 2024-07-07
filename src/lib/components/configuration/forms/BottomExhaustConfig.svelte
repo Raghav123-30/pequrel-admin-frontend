@@ -6,7 +6,7 @@
 
 <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
 	<div class="space-y-4">
-		<Label>bottom High Temp</Label>
+		<Label>Bottom High(Humidity)</Label>
 		<Input
 			type="number"
 			name="bottomHighHumid"
@@ -18,7 +18,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>bottom High On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="bottomHighOnFor"
@@ -30,7 +30,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>bottom High Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="bottomHighOffFor"
@@ -42,7 +42,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>bottom Med Temp</Label>
+		<Label>Bottom Med(Temperature)</Label>
 		<Input
 			type="number"
 			name="bottomMedHumid"
@@ -54,7 +54,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>bottom Med On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="bottomMedOnFor"
@@ -66,7 +66,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>bottom Med Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="bottomMedOffFor"
@@ -78,7 +78,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>bottom Low Temp</Label>
+		<Label>Bottom Low(Humidity)</Label>
 		<Input
 			type="number"
 			name="bottomLowHumid"
@@ -90,7 +90,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>bottom Low On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="bottomLowOnFor"
@@ -102,7 +102,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>bottom Low Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="bottomLowOffFor"

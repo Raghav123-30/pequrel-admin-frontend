@@ -1,7 +1,35 @@
 <script lang="ts">
-	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import { ChevronDownOutline } from 'flowbite-svelte-icons';
+	import { Card } from 'flowbite-svelte';
+	import { StoreSolid, SunSolid, LightbulbSolid } from 'flowbite-svelte-icons';
+	import { page } from '$app/stores';
+	const customerId = $page.params.customerId;
+	const productId = $page.params.productId;
 </script>
 
-<div class="mx-auto my-20 max-w-6xl px-8"></div>
+<div class="mx-auto max-w-6xl p-8">
+	<Card class="mx-auto max-w-6xl ">
+		<h5 class="mb-8 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+			Sections
+		</h5>
+
+		<div
+			class={`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('configuration') && 'font-bold text-red-500'}`}
+		>
+			<StoreSolid />
+			<a href={`configuration`}>Configuration</a>
+		</div>
+		<div
+			class="{`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('dht') && 'font-bold text-red-500'}`}}"
+		>
+			<SunSolid></SunSolid>
+			<a href={`dht`}>Dht</a>
+		</div>
+		<div
+			class={`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('energy-meter') && 'font-bold text-red-500'}`}
+		>
+			<LightbulbSolid></LightbulbSolid>
+			<a href={`energy-meter`}>Energymeter</a>
+		</div>
+	</Card>
+</div>
 <slot></slot>

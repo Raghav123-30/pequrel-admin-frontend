@@ -1,4 +1,4 @@
-import { CustomerSchema } from '$lib/schemas/customerSchema';
+import { customerSchema } from '$lib/schemas';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
@@ -6,7 +6,7 @@ import { getData, putData } from '$lib/server/utils/DataService';
 import type { Customer } from '$lib/models/customer.js';
 
 export const load = async ({ params, cookies }) => {
-	const form = await superValidate(zod(CustomerSchema));
+	const form = await superValidate(zod(customerSchema));
 	const result = await getData<Customer>(`/api/customers/${params.customerId}`);
 	const customerData = result.data;
 	cookies.set('customerEmail', customerData?.customerEmail || '', { httpOnly: true, path: '/' });
@@ -18,7 +18,7 @@ export const load = async ({ params, cookies }) => {
 
 export const actions: Actions = {
 	default: async ({ request, params, cookies }) => {
-		const form = await superValidate(request, zod(CustomerSchema));
+		const form = await superValidate(request, zod(customerSchema));
 		const customerData = form.data;
 
 		if (!form.valid) {

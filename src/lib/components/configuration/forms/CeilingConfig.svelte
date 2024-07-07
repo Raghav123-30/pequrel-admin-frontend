@@ -7,7 +7,7 @@
 
 <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
 	<div class="space-y-4">
-		<Label>ceiling High Temp</Label>
+		<Label>Ceiling High(Temperature)</Label>
 		<Input
 			type="number"
 			name="ceilingHighTemp"
@@ -19,7 +19,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>ceiling High On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="ceilingHighOnFor"
@@ -31,7 +31,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>ceiling High Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="ceilingHighOffFor"
@@ -43,7 +43,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>ceiling Med Temp</Label>
+		<Label>Ceiling Med(Temperature)</Label>
 		<Input
 			type="number"
 			name="ceilingMedTemp"
@@ -55,7 +55,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>ceiling Med On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="ceilingMedOnFor"
@@ -67,7 +67,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>ceiling Med Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="ceilingMedOffFor"
@@ -79,7 +79,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>ceiling Low Temp</Label>
+		<Label>Ceiling Low(Temperature)</Label>
 		<Input
 			type="number"
 			name="ceilingLowTemp"
@@ -91,7 +91,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>ceiling Low On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="ceilingLowOnFor"
@@ -103,7 +103,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>ceiling Low Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="ceilingLowOffFor"

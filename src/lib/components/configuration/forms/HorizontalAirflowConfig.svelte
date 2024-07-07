@@ -7,7 +7,7 @@
 
 <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
 	<div class="space-y-4">
-		<Label>horizontal High Temp</Label>
+		<Label>Horizontal High(Temperature)</Label>
 		<Input
 			type="number"
 			name="horizontalHighTemp"
@@ -19,7 +19,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>horizontal High On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="horizontalHighOnFor"
@@ -31,7 +31,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>horizontal High Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="horizontalHighOffFor"
@@ -43,7 +43,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>horizontal Med Temp</Label>
+		<Label>Horizontal Med(Temperature)</Label>
 		<Input
 			type="number"
 			name="horizontalMedTemp"
@@ -55,7 +55,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>horizontal Med On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="horizontalMedOnFor"
@@ -67,7 +67,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>horizontal Med Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="horizontalMedOffFor"
@@ -79,7 +79,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>horizontal Low Temp</Label>
+		<Label>Horizontal Low(Temperature)</Label>
 		<Input
 			type="number"
 			name="horizontalLowTemp"
@@ -91,7 +91,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>horizontal Low On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="horizontalLowOnFor"
@@ -103,7 +103,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>horizontal Low Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="horizontalLowOffFor"

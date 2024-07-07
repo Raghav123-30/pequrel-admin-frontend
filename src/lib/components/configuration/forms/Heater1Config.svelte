@@ -7,7 +7,7 @@
 
 <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
 	<div class="space-y-4">
-		<Label>heater1 High Temp</Label>
+		<Label>Heater1 High(Temperature)</Label>
 		<Input
 			type="number"
 			name="heater1HighTemp"
@@ -19,7 +19,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>heater1 High On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="heater1HighOnFor"
@@ -31,7 +31,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>heater1 High Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="heater1HighOffFor"
@@ -43,7 +43,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>heater1 Med Temp</Label>
+		<Label>Heater1 Med(Temperature)</Label>
 		<Input
 			type="number"
 			name="heater1MedTemp"
@@ -55,7 +55,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>heater1 Med On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="heater1MedOnFor"
@@ -67,7 +67,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>heater1 Med Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="heater1MedOffFor"
@@ -79,7 +79,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>heater1 Low Temp</Label>
+		<Label>Heater1 Low(Temperature)</Label>
 		<Input
 			type="number"
 			name="heater1LowTemp"
@@ -91,7 +91,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>heater1 Low On For</Label>
+		<Label>On For</Label>
 		<Input
 			type="number"
 			name="heater1LowOnFor"
@@ -103,7 +103,7 @@
 		{/if}
 	</div>
 	<div class="space-y-4">
-		<Label>heater1 Low Off For</Label>
+		<Label>Off For</Label>
 		<Input
 			type="number"
 			name="heater1LowOffFor"
