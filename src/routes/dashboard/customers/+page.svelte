@@ -5,18 +5,11 @@
 	import { Toast } from 'flowbite-svelte';
 	import { superForm } from 'sveltekit-superforms';
 
-	const { form, enhance, submitting } = superForm(data.form, {
+	const { form, enhance, submitting, message } = superForm(data.form, {
 		applyAction: true,
 		invalidateAll: 'force',
 		onResult: ({ result }) => {
-			if (result.type == 'failure') {
-				toastStore.set({
-					message: 'Failed to delete customer data',
-					page: 'customers',
-					show: true,
-					type: 'error'
-				});
-			} else if (result.type == 'success') {
+			if (result.type == 'success') {
 				toastStore.set({
 					message: 'Deleted customer data successfully',
 					page: 'customers',
@@ -29,7 +22,12 @@
 			}
 		}
 	});
-	import { CheckCircleSolid, CirclePlusSolid, UsersSolid } from 'flowbite-svelte-icons';
+	import {
+		CheckCircleSolid,
+		CirclePlusSolid,
+		UsersSolid,
+		ExclamationCircleSolid
+	} from 'flowbite-svelte-icons';
 
 	import { Card, Tooltip } from 'flowbite-svelte';
 
@@ -37,6 +35,17 @@
 	import toastStore from '$lib/stores/toastStore';
 	import DisplayError from '$lib/components/utils/DisplayError.svelte';
 	import DisplayCustomers from '$lib/components/customers/DisplayCustomers.svelte';
+
+	message.subscribe((value) => {
+		if (value) {
+			toastStore.set({
+				message: value,
+				page: 'customers',
+				show: true,
+				type: 'error'
+			});
+		}
+	});
 
 	onDestroy(() => {
 		toastStore.set({
@@ -83,12 +92,16 @@
 
 {#if $toastStore.show && $toastStore.page === 'customers'}
 	<div class="fixed bottom-10 right-10">
-		<Toast color="green">
-			<svelte:fragment slot="icon">
-				<CheckCircleSolid class="h-5 w-5" />
-				<span class="sr-only">Check icon</span>
-			</svelte:fragment>
-			{$toastStore.message}
+		<Toast color={$toastStore.type == 'error' ? 'red' : 'green'}>
+			<div class="flex items-center gap-4">
+				{#if $toastStore.type == 'error'}
+					<ExclamationCircleSolid color="red" />
+				{:else}
+					<CheckCircleSolid color="green" />
+				{/if}
+
+				{$toastStore.message}
+			</div>
 		</Toast>
 	</div>
 {/if}

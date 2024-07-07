@@ -34,12 +34,14 @@
 	let showDeleteProductModal = false;
 	let productToDelete = '';
 
-	const productSelectionList = productsData.map((product) => {
-		return {
-			name: product.productName,
-			value: product.productId
-		};
-	});
+	const productSelectionList = productsData
+		.map((product) => {
+			return {
+				name: product.productName,
+				value: product.productId
+			};
+		})
+		.filter((item) => !customerData.productIds!.includes(item.value!));
 </script>
 
 <Card class="mx-auto max-w-6xl px-4">
@@ -112,7 +114,7 @@
 		{:else}
 			<Card color="green" class=" mx-auto max-w-6xl">
 				<p class="text-center">
-					No A3S products are added yet for customer ms/mr {customerData.customerName}. click on the
+					No A3S products are added yet for customer Ms/Mr {customerData.customerName}. Click on the
 					plus icon on the toolbar to add new product
 				</p>
 			</Card>

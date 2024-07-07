@@ -37,20 +37,30 @@ export const actions: Actions = {
 	delete: async ({ request }) => {
 		const form = await superValidate(request, zod(customerIdSchema));
 		const { customerId } = form.data;
+
 		if (!form.valid) {
 			return fail(400, { form });
 		} else {
-			//const deleteResult = await deleteData<customer>(`/api/customers/${customerId}`);
-			const deleteResult = await fetch(`${BACKEND_URL}/api/customers/${customerId}`, {
-				method: 'DELETE'
-			});
-
-			if (!deleteResult.ok) {
-				return message(form, 'Could not delete customer data.Please try again later', {
-					status: 403
-				});
+			if (form.data.customerId === '66880ed2789fbf22180ab081') {
+				return message(
+					form,
+					'Raghavendra and Raghuttam are using this record for API building and testing. You cannot delete it',
+					{
+						status: 403
+					}
+				);
 			} else {
-				return message(form, 'Deleted customer data successfully');
+				const deleteResult = await fetch(`${BACKEND_URL}/api/customers/${customerId}`, {
+					method: 'DELETE'
+				});
+
+				if (!deleteResult.ok) {
+					return message(form, 'Could not delete customer data.Please try again later', {
+						status: 403
+					});
+				} else {
+					return message(form, 'Deleted customer data successfully');
+				}
 			}
 		}
 	}
