@@ -5,6 +5,7 @@ import type { Actions } from '@sveltejs/kit';
 import { getData, putData } from '$lib/server/utils/DataService';
 import type { Customer } from '$lib/models/customer';
 import { message } from 'sveltekit-superforms';
+import type { Configuration } from '$lib/models/configuration';
 
 const productIdSchema = z.object({
 	productId: z.string().min(1, { message: 'Valid product ID is required' })
@@ -26,6 +27,10 @@ export const actions: Actions = {
 		if (!customerResult.error) {
 			const customerData = customerResult.data;
 			customerData?.productIds?.push(form.data.productId);
+			customerData?.setupConfigurations?.push({
+				productId: form.data.productId,
+				configuration: {} as Configuration
+			});
 			const updatedCustomerResult = await putData(
 				`/api/customers/${params.customerId}`,
 				customerData
@@ -59,6 +64,9 @@ export const actions: Actions = {
 			} else {
 				customerData!.productIds = customerData?.productIds?.filter(
 					(productId) => productId != form.data.productId
+				);
+				customerData!.setupConfigurations = customerData!.setupConfigurations?.filter(
+					(item) => item.productId != form.data.productId
 				);
 				console.log(customerData?.productIds);
 				console.log(form.data.productId);
