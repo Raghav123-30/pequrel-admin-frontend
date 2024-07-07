@@ -1,4 +1,4 @@
 <script lang="ts">
 </script>
 
-<div>Crops page</div>
+<div class="center">Crops page</div>

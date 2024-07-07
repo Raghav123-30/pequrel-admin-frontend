@@ -74,7 +74,7 @@
 					<CirclePlusSolid />
 				</a>
 
-				<Tooltip>Add new product</Tooltip>
+				<Tooltip>Add new customer</Tooltip>
 			</div>
 		</Card>
 		{#if customers.length > 0}
