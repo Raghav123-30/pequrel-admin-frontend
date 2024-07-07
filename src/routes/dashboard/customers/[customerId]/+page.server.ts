@@ -35,7 +35,10 @@ export const actions: Actions = {
 					status: 403
 				});
 			} else {
-				return message(form, `New product is added to ${customerData?.customerName} successfully `);
+				return message(
+					form,
+					`New product is added for ${customerData?.customerName} successfully `
+				);
 			}
 		} else {
 			return message(form, `Could not add new product to customer please try again later`, {

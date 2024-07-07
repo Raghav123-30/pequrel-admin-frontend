@@ -6,6 +6,7 @@
 	export let form;
 	export let errors;
 	export let enhance;
+	export let submitting;
 
 	const customerProducts = productsData.filter((product) =>
 		customerData.productIds?.includes(product.productId!)
@@ -42,6 +43,12 @@
 			};
 		})
 		.filter((item) => !customerData.productIds!.includes(item.value!));
+	submitting.subscribe((value: boolean) => {
+		if (value) {
+			showAddProductModal = false;
+			showDeleteProductModal = false;
+		}
+	});
 </script>
 
 <Card class="mx-auto max-w-6xl px-4">

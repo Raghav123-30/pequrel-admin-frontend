@@ -10,26 +10,41 @@
 	import { productIdSchema } from '$lib/schemas/productIdSchema';
 	import toastStore from '$lib/stores/toastStore';
 	import { onDestroy } from 'svelte';
+	import { Toast } from 'flowbite-svelte';
+	import { CheckCircleSolid, ExclamationCircleSolid } from 'flowbite-svelte-icons';
 
 	export let data: PageData;
 	const { productsData, customerData } = data;
-	const { form, errors, enhance, message } = superForm(data.form, {
+	const { form, errors, enhance, message, submitting } = superForm(data.form, {
 		validators: zod(productIdSchema),
-		onResult: async ({ result }) => {}
+		onResult: async ({ result }) => {
+			if (result.type == 'success') {
+				setTimeout(() => {
+					window.location.reload();
+				}, 1500);
+			} else if (result.type == 'error') {
+				toastStore.set({
+					message: 'Failed to add new product',
+					page: 'customers',
+					show: true,
+					type: 'error'
+				});
+			}
+		}
 	});
 	message.subscribe((value) => {
 		if (value) {
 			toastStore.set({
 				message: value,
-				page: 'products',
+				page: 'customers',
 				show: true,
-				type: 'error'
+				type: 'success'
 			});
 		}
 	});
 	onDestroy(() => {
 		toastStore.set({
-			page: '#',
+			page: 'customers',
 			show: false,
 			message: '',
 			type: 'success'
@@ -40,9 +55,24 @@
 <SuperDebug data={form} />
 <div class="space-y-4 px-8">
 	<div>
-		<DisplayCustomerProducts {customerData} {productsData} {form} {errors} {enhance} />
+		<DisplayCustomerProducts {customerData} {productsData} {form} {errors} {enhance} {submitting} />
 	</div>
 	<div>
 		<IotSection {customerData} {productsData} />
 	</div>
 </div>
+
+{#if $toastStore.show && $toastStore.page === 'customers'}
+	<div class="fixed bottom-10 right-10">
+		<Toast color={$toastStore.type == 'error' ? 'red' : 'green'}>
+			<svelte:fragment slot="icon">
+				{#if $toastStore.type == 'error'}
+					<ExclamationCircleSolid class="h-5 w-5" />
+				{:else}
+					<CheckCircleSolid class="h-5 w-5" />
+				{/if}
+			</svelte:fragment>
+			{$toastStore.message}
+		</Toast>
+	</div>
+{/if}
