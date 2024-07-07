@@ -53,12 +53,12 @@
 </script>
 
 <SuperDebug data={form} />
-<div class="space-y-4 px-8">
-	<div>
-		<DisplayCustomerProducts {customerData} {productsData} {form} {errors} {enhance} {submitting} />
-	</div>
+<div class="space-y-4 px-8 py-10">
 	<div>
 		<IotSection {customerData} {productsData} />
+	</div>
+	<div>
+		<DisplayCustomerProducts {customerData} {productsData} {form} {errors} {enhance} {submitting} />
 	</div>
 </div>
 

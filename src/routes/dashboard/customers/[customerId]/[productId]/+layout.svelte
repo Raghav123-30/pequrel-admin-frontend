@@ -2,8 +2,6 @@
 	import { Card } from 'flowbite-svelte';
 	import { StoreSolid, SunSolid, LightbulbSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/stores';
-	const customerId = $page.params.customerId;
-	const productId = $page.params.productId;
 </script>
 
 <div class="mx-auto max-w-6xl p-8">

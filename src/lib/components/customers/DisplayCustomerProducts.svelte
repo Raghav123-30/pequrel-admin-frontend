@@ -134,7 +134,7 @@
 		<form use:enhance method="POST" action="?/addProduct">
 			<Select items={productSelectionList} name="productId" bind:value={$form.productId} />
 			<div class="my-4">
-				<Button disabled={!$form.productId} type="submit">Next</Button>
+				<Button disabled={!$form.productId} type="submit">Confirm</Button>
 				<Button color="alternative" on:click={() => (showAddProductModal = false)}>Cancel</Button>
 			</div>
 		</form>
@@ -155,7 +155,7 @@
 			<input name="productId" bind:value={$form.productId} class="hidden" />
 			<!-- //will be hidden using it for sake of server action -->
 			<div class="my-4">
-				<Button type="submit" disabled={!$form.productId}>Next</Button>
+				<Button type="submit" disabled={!$form.productId}>Confirm</Button>
 				<Button color="alternative" on:click={() => (showDeleteProductModal = false)}>Cancel</Button
 				>
 			</div>

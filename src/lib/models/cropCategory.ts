@@ -8,5 +8,5 @@ export type CropCategory = {
 
 export enum CropCategoryMode {
 	Drying = 0,
-	Growing = 1
+	DryingPlusGrowing = 1
 }

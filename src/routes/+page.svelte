@@ -1,10 +1,8 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
-	import { Button } from 'flowbite-svelte';
-	export let data: PageServerData;
+	import { goto } from '$app/navigation';
+	onMount(() => {
+		goto('/dashboard');
+	});
 </script>
-
-<div>
-	<h1>{data.name}</h1>
-	<Button>click me</Button>
-</div>
