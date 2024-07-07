@@ -124,20 +124,13 @@
 
 <div class="relative">
 	<Modal title="Product selection" bind:open={showAddProductModal} size="xs">
-		{#if customerProducts.length == 0}
-			<div class="flex flex-col items-center justify-center">
-				<ExclamationCircleOutline class="h-8 w-8" />
-				<p>Mr/Ms {customerData.customerName} has no products yet</p>
+		<form use:enhance method="POST" action="?/addProduct">
+			<Select items={productSelectionList} name="productId" bind:value={$form.productId} />
+			<div class="my-4">
+				<Button disabled={!$form.productId} type="submit">Next</Button>
+				<Button color="alternative" on:click={() => (showAddProductModal = false)}>Cancel</Button>
 			</div>
-		{:else}
-			<form use:enhance method="POST" action="?/deleteProduct">
-				<Select items={productSelectionList} name="productId" bind:value={$form.productId} />
-				<div class="my-4">
-					<Button disabled={!$form.productId} type="submit">Next</Button>
-					<Button color="alternative" on:click={() => (showAddProductModal = false)}>Cancel</Button>
-				</div>
-			</form>
-		{/if}
+		</form>
 	</Modal>
 </div>
 

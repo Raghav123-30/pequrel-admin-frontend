@@ -8,11 +8,32 @@
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { productIdSchema } from '$lib/schemas/productIdSchema';
+	import toastStore from '$lib/stores/toastStore';
+	import { onDestroy } from 'svelte';
 
 	export let data: PageData;
 	const { productsData, customerData } = data;
-	const { form, errors, enhance } = superForm(data.form, {
-		validators: zod(productIdSchema)
+	const { form, errors, enhance, message } = superForm(data.form, {
+		validators: zod(productIdSchema),
+		onResult: async ({ result }) => {}
+	});
+	message.subscribe((value) => {
+		if (value) {
+			toastStore.set({
+				message: value,
+				page: 'products',
+				show: true,
+				type: 'error'
+			});
+		}
+	});
+	onDestroy(() => {
+		toastStore.set({
+			page: '#',
+			show: false,
+			message: '',
+			type: 'success'
+		});
 	});
 </script>
 
