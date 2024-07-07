@@ -67,7 +67,7 @@
 				<TableHead>
 					<!--				<TableHeadCell>ID</TableHeadCell>-->
 					<TableHeadCell>Name</TableHeadCell>
-					<TableHeadCell>Number of customers</TableHeadCell>
+
 					<TableHeadCell>Type</TableHeadCell>
 					<TableHeadCell>No of layers</TableHeadCell>
 					<TableHeadCell>No of racks</TableHeadCell>
@@ -83,7 +83,7 @@
 							<TableBodyCell>
 								{product.productName}
 							</TableBodyCell>
-							<TableBodyCell>{product.numCustomers ? product.numCustomers : 0}</TableBodyCell>
+
 							<TableBodyCell
 								>{product.productType === 0 ? 'Drying' : 'Drying+Growing'}</TableBodyCell
 							>
