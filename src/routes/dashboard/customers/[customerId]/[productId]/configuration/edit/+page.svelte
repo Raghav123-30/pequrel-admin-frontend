@@ -6,7 +6,7 @@
 		topExhaustConfigSchema,
 		ceilingConfigSchema
 	} from '$lib/schemas';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { Progressbar, Button, Card } from 'flowbite-svelte';
 	import {

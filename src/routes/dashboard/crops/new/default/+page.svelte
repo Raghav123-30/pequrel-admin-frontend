@@ -4,7 +4,6 @@
 	import toastStore from '$lib/stores/toastStore';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { cropDataSchema } from '$lib/schemas/cropDataSchema';
-	import SuperDebug from 'sveltekit-superforms';
 
 	import type { PageData } from './$types';
 
@@ -66,8 +65,6 @@
 
 	let step = 1;
 </script>
-
-<SuperDebug data={form} />
 
 <div class="px-8 py-20">
 	<div class="mx-auto my-8 max-w-6xl">

@@ -5,7 +5,7 @@
 	import type { PageData } from './$types';
 
 	import DisplayCustomerProducts from '$lib/components/customers/DisplayCustomerProducts.svelte';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { productIdSchema } from '$lib/schemas/productIdSchema';
 	import toastStore from '$lib/stores/toastStore';
@@ -52,7 +52,6 @@
 	});
 </script>
 
-<SuperDebug data={form} />
 <div class="space-y-4 px-8 py-10">
 	<div>
 		<IotSection {customerData} {productsData} />

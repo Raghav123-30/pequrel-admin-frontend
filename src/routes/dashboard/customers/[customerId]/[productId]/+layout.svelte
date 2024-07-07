@@ -17,7 +17,7 @@
 			<a href={`configuration`}>Configuration</a>
 		</div>
 		<div
-			class="{`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('dht') && 'font-bold text-red-500'}`}}"
+			class={`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('dht') && 'font-bold text-red-500'}`}
 		>
 			<SunSolid></SunSolid>
 			<a href={`dht`}>Dht</a>
