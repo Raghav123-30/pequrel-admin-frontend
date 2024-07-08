@@ -77,7 +77,7 @@
 		yaxis: [
 			{
 				title: {
-					text: 'power (A)',
+					text: 'power (Kw)',
 					style: {
 						color: '#FF5733'
 					}

@@ -79,7 +79,7 @@
 		yaxis: [
 			{
 				title: {
-					text: 'voltage (A)',
+					text: 'voltage (V)',
 					style: {
 						color: '#FF5733'
 					}

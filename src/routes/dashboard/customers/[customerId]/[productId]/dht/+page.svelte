@@ -33,6 +33,7 @@
 				api={`https://pequrel-backend.raghavendrabhat.in/api/dht?customerId=${customerId}&productId=${productId}&temperature={}&humidity={}&sensorId={}`}
 			/>
 		</Card>
+
+		<VisualizeDhtData {dhtData} />
 	</div>
-	<VisualizeDhtData {dhtData} />
 {/if}
