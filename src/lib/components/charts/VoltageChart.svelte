@@ -1,20 +1,19 @@
-<script lang="ts">
+<script>
 	// @ts-nocheck
-	import { format } from 'date-fns';
+
 	import { Chart, Card } from 'flowbite-svelte';
 	import { ChevronRightOutline } from 'flowbite-svelte-icons';
-	export let sensorId;
+	import { format } from 'date-fns';
+
 	// Sample Dht data
-	export let dhtData;
+	export let voltageData = [];
 
 	// Extracting data for the chart
-	let timestamps = dhtData.map((entry) => {
+	let timestamps = voltageData.map((entry) => {
 		let time = new Date(entry.timestamp);
 		return format(time, 'dd MMM HH:mm');
 	});
-	let temperatures = dhtData.map((entry) => entry.temperature);
-	let humidities = dhtData.map((entry) => entry.humidity);
-	console.log(`Dht data received is ${dhtData}`);
+	let voltages = voltageData.map((entry) => entry.voltage);
 
 	let options = {
 		chart: {
@@ -60,14 +59,9 @@
 		},
 		series: [
 			{
-				name: 'Temperature',
-				data: temperatures,
+				name: 'voltage',
+				data: voltages,
 				color: '#FF5733'
-			},
-			{
-				name: 'Humidity',
-				data: humidities,
-				color: '#33C3FF'
 			}
 		],
 		xaxis: {
@@ -85,7 +79,7 @@
 		yaxis: [
 			{
 				title: {
-					text: 'Temperature (°C)',
+					text: 'voltage (A)',
 					style: {
 						color: '#FF5733'
 					}
@@ -93,20 +87,6 @@
 				labels: {
 					style: {
 						color: '#FF5733'
-					}
-				}
-			},
-			{
-				opposite: true,
-				title: {
-					text: 'Humidity (%)',
-					style: {
-						color: '#33C3FF'
-					}
-				},
-				labels: {
-					style: {
-						color: '#33C3FF'
 					}
 				}
 			}
@@ -118,11 +98,8 @@
 	<div class="flex justify-between">
 		<div>
 			<h5 class="pb-2 text-3xl font-bold leading-none text-gray-900 dark:text-white">
-				Sensor {sensorId}
+				voltage vs time
 			</h5>
-			<p class="text-base font-normal text-gray-500 dark:text-gray-400">
-				(Temperature and Humidity) vs time
-			</p>
 		</div>
 		<div
 			class="flex items-center px-2.5 py-0.5 text-center text-base font-semibold text-green-500 dark:text-green-500"

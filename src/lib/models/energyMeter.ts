@@ -4,4 +4,5 @@ export type EnergyMeter = {
 	energy: number;
 	current: number;
 	power: number;
+	timestamp: Date;
 };
