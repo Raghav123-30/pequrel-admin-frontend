@@ -3,6 +3,7 @@
 	import DisplayApi from '$lib/components/iot/DisplayApi.svelte';
 	import { page } from '$app/stores';
 	import DisplayError from '$lib/components/utils/DisplayError.svelte';
+	import DhtChart from '$lib/components/charts/DhtChart.svelte';
 	const customerId = $page.params.customerId;
 	const productId = $page.params.productId;
 </script>
@@ -23,4 +24,5 @@
 			api={`https://pequrel-backend.raghavendrabhat.in/api/dht?customerId=${customerId}&productId=${productId}&temperature={}&humidity={}&sensorId={}`}
 		/>
 	</Card>
+	<DhtChart />
 </div>

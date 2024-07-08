@@ -2,6 +2,8 @@
 	import { Card } from 'flowbite-svelte';
 	import { StoreSolid, SunSolid, LightbulbSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/stores';
+	const productId = $page.params.productId;
+	const customerId = $page.params.customerId;
 </script>
 
 <div class="mx-auto max-w-6xl p-8">
@@ -14,19 +16,19 @@
 			class={`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('configuration') && 'font-bold text-red-500'}`}
 		>
 			<StoreSolid />
-			<a href={`configuration`}>Configuration</a>
+			<a href={`/dashboard/customers/${customerId}/${productId}/configuration`}>Configuration</a>
 		</div>
 		<div
 			class={`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('dht') && 'font-bold text-red-500'}`}
 		>
 			<SunSolid></SunSolid>
-			<a href={`dht`}>Dht</a>
+			<a href={`/dashboard/customers/${customerId}/${productId}/dht`}>Dht</a>
 		</div>
 		<div
 			class={`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('energy-meter') && 'font-bold text-red-500'}`}
 		>
 			<LightbulbSolid></LightbulbSolid>
-			<a href={`energy-meter`}>Energymeter</a>
+			<a href={`/dashboard/customers/${customerId}/${productId}/energy-meter`}>Energymeter</a>
 		</div>
 	</Card>
 </div>
