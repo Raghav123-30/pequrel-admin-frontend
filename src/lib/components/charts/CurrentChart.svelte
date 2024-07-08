@@ -21,7 +21,7 @@
 			type: 'area',
 			fontFamily: 'Inter, sans-serif',
 			toolbar: {
-				show: true,
+				show: false,
 				tools: {
 					zoom: true,
 					zoomin: true,

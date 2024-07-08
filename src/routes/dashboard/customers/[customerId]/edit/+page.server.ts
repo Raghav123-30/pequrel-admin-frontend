@@ -50,9 +50,15 @@ export const actions: Actions = {
 						status: 403
 					});
 				} else {
+					const currentCustomerData = allcustomersResponse.data?.find(
+						(customer) => customer.customerId == params.customerId
+					);
+
 					const response = await putData(`/api/customers/${params.customerId}`, {
 						...customerData,
-						customerId: params.customerId
+						customerId: params.customerId,
+						cropIds: currentCustomerData?.cropIds,
+						productIds: currentCustomerData?.productIds
 					});
 					console.log(response);
 					if (!response.error) {

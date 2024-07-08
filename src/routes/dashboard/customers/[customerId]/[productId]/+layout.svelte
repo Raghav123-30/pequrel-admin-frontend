@@ -4,9 +4,18 @@
 	import { page } from '$app/stores';
 	const productId = $page.params.productId;
 	const customerId = $page.params.customerId;
+	export let data;
+	const { customerData, productsData } = data;
+	const customerName = customerData.customerName;
+	const productName = productsData.find((item) => item.productId == productId)?.productName;
 </script>
 
 <div class="mx-auto max-w-6xl p-8">
+	<Card class="mx-auto my-4 max-w-6xl p-8" color="green">
+		<p class="break-words text-center">
+			You are now browsing the IOT section of product {productName} of customer Mr/Ms {customerName}.
+		</p>
+	</Card>
 	<Card class="mx-auto max-w-6xl ">
 		<h5 class="mb-8 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
 			Sections
