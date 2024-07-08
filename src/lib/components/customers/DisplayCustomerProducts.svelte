@@ -131,13 +131,22 @@
 
 <div class="relative">
 	<Modal title="Product selection" bind:open={showAddProductModal} size="xs">
-		<form use:enhance method="POST" action="?/addProduct">
-			<Select items={productSelectionList} name="productId" bind:value={$form.productId} />
-			<div class="my-4">
-				<Button disabled={!$form.productId} type="submit">Confirm</Button>
-				<Button color="alternative" on:click={() => (showAddProductModal = false)}>Cancel</Button>
+		{#if productSelectionList.length == 0}
+			<div class="flex flex-col items-center justify-center">
+				<ExclamationCircleOutline class="h-8 w-8" />
+				<p>
+					{customerData.customerName} owns all the A3S products
+				</p>
 			</div>
-		</form>
+		{:else}
+			<form use:enhance method="POST" action="?/addProduct">
+				<Select items={productSelectionList} name="productId" bind:value={$form.productId} />
+				<div class="my-4">
+					<Button disabled={!$form.productId} type="submit">Confirm</Button>
+					<Button color="alternative" on:click={() => (showAddProductModal = false)}>Cancel</Button>
+				</div>
+			</form>
+		{/if}
 	</Modal>
 </div>
 
