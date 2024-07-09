@@ -4,10 +4,6 @@ import { getData, postData } from '$lib/server/utils/DataService.js';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { redirect } from '@sveltejs/kit';
-export const load = async () => {
-	const form = await superValidate(zod(cropCategorySchema));
-	return { form };
-};
 
 export const actions = {
 	default: async ({ request }) => {

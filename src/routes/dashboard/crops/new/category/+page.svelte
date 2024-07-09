@@ -15,7 +15,7 @@
 
 	export let data: PageData;
 
-	const { form, enhance, errors, submitting, message } = superForm(data.form, {
+	const { form, enhance, errors, submitting, message } = superForm(data.categoryForm, {
 		validators: zod(cropCategorySchema),
 
 		onResult: ({ result }) => {

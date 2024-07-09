@@ -25,7 +25,7 @@
 		CirclePlusSolid
 	} from 'flowbite-svelte-icons';
 	let searchTerm = '';
-	let productToBeDeleted = '';
+	let cropCategoryToBeDeleted = '';
 	let showModal = false;
 
 	$: filteredCategories = categories.filter(
@@ -46,22 +46,22 @@
 				<RocketSolid class="h-3 w-3 text-gray-500 dark:text-gray-400" />
 				<span class="sr-only">Light bulb</span>
 			</span>
-			<span> All the registered A3S products </span>
+			<span> All the registered Crop categories </span>
 		</p>
 
 		<div>
-			<a href="/dashboard/products/new">
+			<a href="/dashboard/crops/new/category">
 				<CirclePlusSolid />
 			</a>
 
-			<Tooltip>Add new product</Tooltip>
+			<Tooltip>Add new crop category</Tooltip>
 		</div>
 	</Card>
 	{#if categories.length}
 		<div class="mx-auto max-w-6xl">
 			<Table>
 				<TableSearch
-					placeholder="Search by product name"
+					placeholder="Search by category name"
 					hoverable={true}
 					bind:inputValue={searchTerm}
 				/>
@@ -75,7 +75,6 @@
 				<TableBody>
 					{#each filteredCategories as category}
 						<TableBodyRow>
-							<!--						<TableBodyCell>{product.productId}</TableBodyCell>-->
 							<TableBodyCell>
 								{category.cropCategoryNameEnglish}
 							</TableBodyCell>
@@ -91,17 +90,17 @@
 										</a>
 									</button>
 
-									<!-- <button
+									<button
 										class="p-2 hover:bg-white/50"
 										on:click={() => {
 											showModal = true;
-											productToBeDeleted = product.productName;
-											form.set({ productId: product.productId || 'ERROR' });
+											cropCategoryToBeDeleted = category.cropCategoryNameEnglish;
+											form.set({ cropCategoryId: category.cropCategoryId || 'ERROR' });
 										}}
 									>
 										<TrashBinSolid />
-										<Tooltip>Delete product</Tooltip>
-									</button> -->
+										<Tooltip>Delete crop category</Tooltip>
+									</button>
 								</div>
 							</TableHeadCell>
 						</TableBodyRow>
@@ -122,13 +121,14 @@
 <Modal title="Are you absolutely sure?" bind:open={showModal} size="xs">
 	<ExclamationCircleOutline class="mx-auto mb-4 h-12 w-12 text-gray-400 dark:text-gray-200" />
 	<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-		Are you sure you want to delete this product? <span class="font-bold">{productToBeDeleted}</span
+		Are you sure you want to delete this crop category? <span class="font-bold"
+			>{cropCategoryToBeDeleted}</span
 		>
 	</h3>
 
 	<form method="POST" action="?/delete" use:enhance>
 		<!-- productId is set right when modal is enabled, I am setting input like this to resolve known superforms bug -->
-		<input name="productId" bind:value={$form.productId} class="hidden" />
+		<input name="productId" bind:value={$form.cropCategoryId} class="hidden" />
 		<Button color="red" class="me-2" disabled={$submitting} type="submit">
 			{#if $submitting}
 				deleting ...
