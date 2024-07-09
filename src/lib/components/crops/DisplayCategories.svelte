@@ -39,7 +39,7 @@
 	});
 </script>
 
-<div class="px-8 py-20">
+<div class="px-8">
 	<Card class="mx-auto my-4 flex max-w-6xl flex-row items-center justify-between">
 		<p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
 			<span class="me-3 inline-flex rounded-full bg-gray-200 p-1 dark:bg-gray-600">
@@ -126,9 +126,9 @@
 		>
 	</h3>
 
-	<form method="POST" action="?/delete" use:enhance>
+	<form method="POST" action="?/deleteCropCategory" use:enhance>
 		<!-- productId is set right when modal is enabled, I am setting input like this to resolve known superforms bug -->
-		<input name="productId" bind:value={$form.cropCategoryId} class="hidden" />
+		<input name="cropCategoryId" bind:value={$form.cropCategoryId} class="hidden" />
 		<Button color="red" class="me-2" disabled={$submitting} type="submit">
 			{#if $submitting}
 				deleting ...
