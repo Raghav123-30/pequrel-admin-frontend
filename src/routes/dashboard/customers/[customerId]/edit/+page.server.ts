@@ -58,7 +58,8 @@ export const actions: Actions = {
 						...customerData,
 						customerId: params.customerId,
 						cropIds: currentCustomerData?.cropIds,
-						productIds: currentCustomerData?.productIds
+						productIds: currentCustomerData?.productIds,
+						setupConfigurations: currentCustomerData?.setupConfigurations
 					});
 					console.log(response);
 					if (!response.error) {

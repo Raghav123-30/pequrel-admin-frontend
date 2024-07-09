@@ -3,10 +3,4 @@ export type CropCategory = {
 	cropCategoryNameEnglish: string;
 	cropCategoryNameKannada: string;
 	cropCategoryNameHindi: string;
-	mode: CropCategoryMode;
 };
-
-export enum CropCategoryMode {
-	Drying = 0,
-	DryingPlusGrowing = 1
-}

@@ -9,6 +9,7 @@ import { productIdSchema } from './productIdSchema';
 import { ceilingConfigSchema } from './ceilingConfigSchema';
 import { productSchema } from './productSchema';
 import { heater1ConfigSchema } from './heater1ConfigSchema';
+import { cropCategorySchema } from './cropCategorySchema';
 
 export {
 	ceilingConfigSchema,
@@ -21,5 +22,6 @@ export {
 	cropSchema,
 	customerSchema,
 	productSchema,
-	productIdSchema
+	productIdSchema,
+	cropCategorySchema
 };

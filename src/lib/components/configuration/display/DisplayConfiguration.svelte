@@ -177,6 +177,7 @@
 					<TableBodyCell>{configuration.heater1LowOffFor}</TableBodyCell>
 				</TableBodyRow>
 			</TableBody>
+
 		</Table>
 	</Card>
 </div>

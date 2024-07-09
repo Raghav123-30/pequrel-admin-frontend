@@ -47,7 +47,7 @@
 	<div class="px-8 py-20">
 		<Card class="mx-auto my-4 max-w-3xl">
 			<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-				Add new product
+				Edit product details of {productData?.productName}
 			</h5>
 			<form class="flex flex-col gap-4" method="POST" use:enhance>
 				<ProductForm {form} {errors} />
