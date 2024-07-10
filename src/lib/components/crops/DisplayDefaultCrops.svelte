@@ -17,7 +17,8 @@
 		TableSearch,
 		Modal,
 		Button,
-		Card
+		Card,
+		Avatar
 	} from 'flowbite-svelte';
 	import {
 		EditSolid,
@@ -29,6 +30,8 @@
 	let searchTerm = '';
 	let defaultCropToBeDeleted = '';
 	let showModal = false;
+	let cropToBeViewed: Crop;
+	let showCropModal = false;
 
 	$: filtereddefaultCrops = defaultCrops.filter(
 		(category) => category.cropNameEnglish.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
@@ -73,6 +76,7 @@
 					bind:inputValue={searchTerm}
 				/>
 				<TableHead>
+					<TableHeadCell>Crop Image</TableHeadCell>
 					<!--				<TableHeadCell>ID</TableHeadCell>-->
 					<TableHeadCell>Crop Name(English)</TableHeadCell>
 					<TableHeadCell>Crop Name(Kannada)</TableHeadCell>
@@ -84,6 +88,16 @@
 				<TableBody>
 					{#each filtereddefaultCrops as crop}
 						<TableBodyRow>
+							<TableBodyCell>
+								<button
+									on:click={() => {
+										cropToBeViewed = crop;
+										showCropModal = true;
+									}}
+								>
+									<Avatar size="md" src={crop.imgUrl} />
+								</button>
+							</TableBodyCell>
 							<TableBodyCell>
 								{crop.cropNameEnglish}
 							</TableBodyCell>
@@ -149,4 +163,10 @@
 	</form>
 
 	<Button color="alternative" on:click={() => (showModal = false)}>No, cancel</Button>
+</Modal>
+
+<Modal bind:open={showCropModal} autoclose size="xs" on:on:close={() => (showCropModal = false)}>
+	<div class="flex items-center justify-center">
+		<img src={cropToBeViewed.imgUrl} alt="" />
+	</div>
 </Modal>

@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { Label, Input, Helper } from 'flowbite-svelte';
+	import type { CropCategory } from '$lib/models/cropCategory';
+	import { Label, Input, Helper, Select } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	export let form;
 	export let errors;
 	export let isDefault;
+	export let allCategories: CropCategory[];
 
 	onMount(() => {
 		if (isDefault) {
@@ -12,6 +14,22 @@
 		} else {
 			$form.default = false;
 		}
+	});
+	const modeItems = [
+		{
+			name: 'Drying',
+			value: 'Drying'
+		},
+		{
+			name: 'Growing',
+			value: 'Growing'
+		}
+	];
+	const allCategoriesItems = allCategories.map((item) => {
+		return {
+			name: item.cropCategoryNameEnglish,
+			value: item.cropCategoryId
+		};
 	});
 </script>
 
@@ -50,7 +68,7 @@
 </div>
 <div class="space-y-4">
 	<Label>Mode</Label>
-	<Input bind:value={$form.mode} name="mode" color={$errors.mode && 'red'} />
+	<Select items={modeItems} bind:value={$form.mode} name="mode" color={$errors.mode && 'red'} />
 	{#if $errors.mode}
 		<Helper color="red">{$errors.mode}</Helper>
 	{/if}
@@ -64,7 +82,8 @@
 </div>
 <div class="space-y-4">
 	<Label>Crop category name</Label>
-	<Input
+	<Select
+		items={allCategoriesItems}
 		bind:value={$form.cropCategoryId}
 		name="cropCategoryId"
 		color={$errors.cropCategoryId && 'red'}

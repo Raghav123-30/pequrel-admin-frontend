@@ -6,6 +6,7 @@
 	import { cropDataSchema } from '$lib/schemas/cropDataSchema';
 	import { z } from 'zod';
 	let input: HTMLInputElement;
+
 	let image: HTMLImageElement | undefined;
 	import { PUBLIC_S3_BUCKET_URL } from '$env/static/public';
 
@@ -142,7 +143,7 @@
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide crop details
 				</h5>
-				<CropDataForm {form} {errors} isDefault={true} />
+				<CropDataForm {form} {errors} isDefault={true} allCategories={data.allCropCategories} />
 				<div class="flex justify-end">
 					<Button
 						on:click={async () => {
@@ -262,7 +263,9 @@
 						on:click={() => window.location.reload()}
 						disabled={isUploaded || isUploading}>Reset</Button
 					>
-					<Button on:click={onUploadRequested}>Next</Button>
+					<Button on:click={onUploadRequested} disabled={isUploading}>
+						{isUploading ? 'Uploading...' : 'Upload'}
+					</Button>
 				</div>
 			{/if}
 		</form>
