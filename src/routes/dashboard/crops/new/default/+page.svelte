@@ -7,6 +7,7 @@
 	import { z } from 'zod';
 	let input: HTMLInputElement;
 	let image: HTMLImageElement | undefined;
+	import { PUBLIC_S3_BUCKET_URL } from '$env/static/public';
 
 	let showImage = false;
 	import type { PageData } from './$types';
@@ -28,11 +29,11 @@
 	import { PlusOutline, QuestionCircleSolid } from 'flowbite-svelte-icons';
 	import { Amplify } from 'aws-amplify';
 	import awsmobile from '../../../../../aws-exports';
-	const imageSchema = z.object({
-		image: z
-			.instanceof(File, { message: 'Please upload a file.' })
-			.refine((f) => f.size < 100_000, 'Max 100 kB upload size.')
-	});
+	function uuidv4() {
+		return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) =>
+			(+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
+		);
+	}
 	export let data: PageData;
 	function onChange() {
 		const file = input.files;
@@ -78,7 +79,7 @@
 		Amplify.configure(awsmobile);
 		try {
 			if (input.files) {
-				const fileName = `crops/${$form.cropNameEnglish.replace(/\s+/g, '')}`;
+				const fileName = `crops/${uuidv4()}`;
 				const result = await uploadData({
 					path: fileName,
 					// Alternatively, path: ({identityId}) => `protected/${identityId}/album/2024/1.jpg`
@@ -89,6 +90,7 @@
 				}).result;
 				console.log('Succeeded: ', result);
 				isUploaded = true;
+				$form.imgUrl = PUBLIC_S3_BUCKET_URL + '/' + fileName;
 			} else {
 				throw Error('Invalid file');
 			}
@@ -128,6 +130,7 @@
 </script>
 
 <SuperDebug data={form} />
+
 <div class="px-8 py-20">
 	<div class="mx-auto my-8 max-w-6xl">
 		<Progressbar progress={(step / 7) * 100} />
@@ -218,6 +221,7 @@
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide heater 1 configuration details
 				</h5>
+				<input name="imgUrl" class="hidden" bind:value={$form.imgUrl} />
 				<Heater1Config {form} {errors} />
 				<div class="space-y-4">
 					<div class="flex items-center justify-between">
