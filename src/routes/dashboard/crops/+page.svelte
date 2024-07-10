@@ -3,12 +3,15 @@
 	import { Toast } from 'flowbite-svelte';
 	import { ExclamationCircleSolid, CheckCircleSolid } from 'flowbite-svelte-icons';
 	import DisplayCategories from '$lib/components/crops/DisplayCategories.svelte';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { cropCategoryIdSchema } from '$lib/schemas/cropCategoryIdSchema.js';
 	import { Card } from 'flowbite-svelte';
+	import DisplayDefaultCrops from '$lib/components/crops/DisplayDefaultCrops.svelte';
 	export let data;
-	const { allCropCategories } = data;
+	const { allCropCategories, allCrops } = data;
+	const defaultCrops = allCrops.filter((item) => item.default === true);
+	const specificCrops = allCrops.filter((item) => item.default === false);
 	const { form, enhance, errors, submitting, message } = superForm(data.cropCategoryIdForm, {
 		validators: zod(cropCategoryIdSchema),
 		onResult: ({ result }) => {
@@ -37,9 +40,18 @@
 	});
 </script>
 
-<div>
+<div class="space-y-6">
 	<Card class="mx-auto my-4 max-w-6xl p-2" color="none">
 		<DisplayCategories categories={allCropCategories} {form} {enhance} {submitting} />
+	</Card>
+	<Card class="mx-auto my-4 max-w-6xl p-2" color="none">
+		<DisplayDefaultCrops
+			categories={allCropCategories}
+			{defaultCrops}
+			{form}
+			{enhance}
+			{submitting}
+		/>
 	</Card>
 </div>
 

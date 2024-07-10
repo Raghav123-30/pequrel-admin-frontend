@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { getData } from '$lib/server/utils/DataService';
 import type { Product } from '$lib/models/product';
-import { BACKEND_URL } from '$env/static/private';
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { fail, message, superValidate } from 'sveltekit-superforms';
@@ -38,7 +38,7 @@ export const actions: Actions = {
 			return fail(400, { form });
 		} else {
 			//const deleteResult = await deleteData<Product>(`/api/products/${productId}`);
-			const deleteResult = await fetch(`${BACKEND_URL}/api/products/${productId}`, {
+			const deleteResult = await fetch(`${PUBLIC_BACKEND_URL}/api/products/${productId}`, {
 				method: 'DELETE'
 			});
 			console.log(deleteResult);

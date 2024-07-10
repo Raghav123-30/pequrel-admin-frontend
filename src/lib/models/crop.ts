@@ -6,10 +6,9 @@ export type Crop = {
 	cropNameEnglish: string;
 	cropNameKannada: string;
 	cropNameHindi: string;
-	specialInstructionsEnglish: string;
-	specialInstructionsKannada: string;
-	specialInstructionsHindi: string;
-	isDefault: boolean;
+	default: boolean;
 	city: string;
+	mode: boolean;
 	configuration: Configuration;
+	imgUrl: string;
 };

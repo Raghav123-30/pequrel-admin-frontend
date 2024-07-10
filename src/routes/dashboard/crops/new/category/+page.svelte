@@ -11,7 +11,6 @@
 
 	import { cropCategorySchema } from '$lib/schemas';
 	import CropCategoryForm from '$lib/components/crops/forms/CropCategoryForm.svelte';
-	import SuperDebug from 'sveltekit-superforms';
 
 	export let data: PageData;
 
@@ -31,7 +30,6 @@
 	});
 </script>
 
-<SuperDebug data={form} />
 <div class="px-8 py-20">
 	<Card class="mx-auto my-4 max-w-3xl">
 		<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

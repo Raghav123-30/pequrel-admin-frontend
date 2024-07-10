@@ -9,7 +9,7 @@
 	import DisplayError from '$lib/components/utils/DisplayError.svelte';
 	import CropCategoryForm from '$lib/components/crops/forms/CropCategoryForm.svelte';
 	import { CloseCircleSolid } from 'flowbite-svelte-icons';
-	import SuperDebug from 'sveltekit-superforms';
+
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { cropCategorySchema } from '$lib/schemas/cropCategorySchema.js';
 	const cropCategoryId = $page.params.cropCategoryId;
@@ -49,7 +49,6 @@
 {#if pageError}
 	<DisplayError message="Record of that customer does not exist in the server" />
 {:else}
-	<SuperDebug data={categoryForm} />
 	<div class="px-8 py-20">
 		<Card class="mx-auto my-4 max-w-3xl">
 			<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

@@ -1,11 +1,17 @@
 <script lang="ts">
-	import { Card, Label, Input, Textarea, Button, Helper, Progressbar } from 'flowbite-svelte';
+	import { Card, Button, Progressbar, Fileupload, Helper } from 'flowbite-svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 	import toastStore from '$lib/stores/toastStore';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { cropDataSchema } from '$lib/schemas/cropDataSchema';
+	import { z } from 'zod';
+	let input: HTMLInputElement;
+	let image: HTMLImageElement | undefined;
 
+	let showImage = false;
 	import type { PageData } from './$types';
+
+	import { uploadData } from 'aws-amplify/storage';
 
 	import { cropSchema } from '$lib/schemas/cropSchema';
 	import TopExhaustConfig from '$lib/components/configuration/forms/TopExhaustConfig.svelte';
@@ -17,9 +23,36 @@
 	import { topExhaustConfigSchema } from '$lib/schemas/topExhaustConfigSchema';
 	import { bottomExhaustConfigSchema } from '$lib/schemas/bottomExhaustConfigSchema';
 	import { horizontalAirflowConfigSchema } from '$lib/schemas/horizontalAirFlowConfigSchema';
-
+	import CropDataForm from '$lib/components/crops/forms/CropDataForm.svelte';
+	import SuperDebug from 'sveltekit-superforms';
+	import { PlusOutline, QuestionCircleSolid } from 'flowbite-svelte-icons';
+	import { Amplify } from 'aws-amplify';
+	import awsmobile from '../../../../../aws-exports';
+	const imageSchema = z.object({
+		image: z
+			.instanceof(File, { message: 'Please upload a file.' })
+			.refine((f) => f.size < 100_000, 'Max 100 kB upload size.')
+	});
 	export let data: PageData;
+	function onChange() {
+		const file = input.files;
+		console.log(input.files);
+		console.log(file);
+		console.log(input);
+		if (file) {
+			showImage = true;
 
+			const reader = new FileReader();
+			reader.addEventListener('load', function () {
+				if (image) {
+					image.setAttribute('src', reader.result as string);
+				}
+			});
+			reader.readAsDataURL(file[0]);
+		} else {
+			showImage = false;
+		}
+	}
 	const { form, enhance, errors, submitting, message, validateForm } = superForm(data.form, {
 		validators: zod(cropSchema),
 		dataType: 'json',
@@ -27,6 +60,7 @@
 			console.log($form);
 		},
 		onResult: ({ result }) => {
+			console.log(result);
 			if (result.type === 'redirect') {
 				toastStore.set({
 					page: 'crops',
@@ -37,6 +71,33 @@
 			}
 		}
 	});
+	let isUploading = false;
+	let isUploaded = false;
+	const onUploadRequested = async () => {
+		isUploading = true;
+		Amplify.configure(awsmobile);
+		try {
+			if (input.files) {
+				const fileName = `crops/${$form.cropNameEnglish.replace(/\s+/g, '')}`;
+				const result = await uploadData({
+					path: fileName,
+					// Alternatively, path: ({identityId}) => `protected/${identityId}/album/2024/1.jpg`
+					data: input.files[0],
+					options: {
+						// onProgress // Optional progress callback.
+					}
+				}).result;
+				console.log('Succeeded: ', result);
+				isUploaded = true;
+			} else {
+				throw Error('Invalid file');
+			}
+			step += 1;
+		} catch (error) {
+			console.log('Error : ', error);
+		}
+		isUploading = false;
+	};
 	const checkIsNextForCropDataDisabled = async () => {
 		const result = await validateForm({ schema: zod(cropDataSchema), update: true });
 
@@ -66,9 +127,10 @@
 	let step = 1;
 </script>
 
+<SuperDebug data={form} />
 <div class="px-8 py-20">
 	<div class="mx-auto my-8 max-w-6xl">
-		<Progressbar progress={(step / 6) * 100} />
+		<Progressbar progress={(step / 7) * 100} />
 	</div>
 
 	<Card class="mx-auto my-4 max-w-6xl">
@@ -77,99 +139,8 @@
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide crop details
 				</h5>
-				<div class="space-y-4">
-					<Label>Crop name</Label>
-					<Input
-						bind:value={$form.cropNameEnglish}
-						name="cropNameEnglish"
-						color={$errors.cropNameEnglish && 'red'}
-					/>
-					{#if $errors.cropNameEnglish}
-						<Helper color="red">{$errors.cropNameEnglish}</Helper>
-					{/if}
-				</div>
-				<div class="space-y-4">
-					<Label>Crop name (Kannada)</Label>
-					<Input
-						bind:value={$form.cropNameKannada}
-						name="cropNameKannada"
-						color={$errors.cropNameKannada && 'red'}
-					/>
-					{#if $errors.cropNameKannada}
-						<Helper color="red">{$errors.cropNameKannada}</Helper>
-					{/if}
-				</div>
-				<div class="space-y-4">
-					<Label>Crop name (Hindi)</Label>
-					<Input
-						bind:value={$form.cropNameHindi}
-						name="cropNameHindi"
-						color={$errors.cropNameHindi && 'red'}
-					/>
-					{#if $errors.cropNameHindi}
-						<Helper color="red">{$errors.cropNameHindi}</Helper>
-					{/if}
-				</div>
-				<div class="space-y-4">
-					<Label>Mode</Label>
-					<Input bind:value={$form.mode} name="mode" color={$errors.mode && 'red'} />
-					{#if $errors.mode}
-						<Helper color="red">{$errors.mode}</Helper>
-					{/if}
-				</div>
-				<div class="space-y-4">
-					<Label>City</Label>
-					<Input bind:value={$form.city} name="city" color={$errors.city && 'red'} />
-					{#if $errors.city}
-						<Helper color="red">{$errors.city}</Helper>
-					{/if}
-				</div>
-				<div class="space-y-4">
-					<Label>Crop category name</Label>
-					<Input
-						bind:value={$form.cropCategoryName}
-						name="cropCategoryName"
-						color={$errors.cropCategoryName && 'red'}
-					/>
-					{#if $errors.cropCategoryName}
-						<Helper color="red">{$errors.cropCategoryName}</Helper>
-					{/if}
-				</div>
-				<div class="space-y-4">
-					<Label>Special instructions</Label>
-					<Textarea
-						name="specialInstructions"
-						rows={6}
-						bind:value={$form.specialInstructions}
-						color={$errors.specialInstructions && 'red'}
-					/>
-					{#if $errors.specialInstructions}
-						<Helper color="red">{$errors.specialInstructions}</Helper>
-					{/if}
-				</div>
-				<div class="space-y-4">
-					<Label>Special instructions (Kannada)</Label>
-					<Textarea
-						name="specialInstructionsKannada"
-						rows={6}
-						bind:value={$form.specialInstructionsKannada}
-						color={$errors.specialInstructionsKannada && 'red'}
-					/>
-					{#if $errors.specialInstructionsKannada}
-						<Helper color="red">{$errors.specialInstructionsKannada}</Helper>
-					{/if}
-				</div>
-				<div class="space-y-4">
-					<Label>Special instructions (Hindi)</Label>
-					<Textarea
-						name="specialInstructionsHindi"
-						rows={6}
-						bind:value={$form.specialInstructionsHindi}
-						color={$errors.specialInstructionsHindi && 'red'}
-					/>
-					{#if $errors.specialInstructionsHindi}
-						<Helper color="red">{$errors.specialInstructionsHindi}</Helper>
-					{/if}
+				<CropDataForm {form} {errors} isDefault={true} />
+				<div class="flex justify-end">
 					<Button
 						on:click={async () => {
 							const valid = await checkIsNextForCropDataDisabled();
@@ -179,13 +150,13 @@
 						}}>Next</Button
 					>
 				</div>
-			{:else if step == 2}
+			{:else if step == 3}
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide ceiling configuration details
 				</h5>
 				<CeilingConfig {form} {errors} />
 				<div class="flex items-center justify-between">
-					<Button color="alternative" on:click={() => (step -= 1)}>Previous</Button>
+					<Button color="alternative" on:click={() => window.location.reload()}>Reset</Button>
 					<Button
 						on:click={async () => {
 							const valid = await checkIsNextForCeilingConfigFormDisabled();
@@ -195,7 +166,7 @@
 						}}>Next</Button
 					>
 				</div>
-			{:else if step == 3}
+			{:else if step == 4}
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide top exhaust configuration details
 				</h5>
@@ -211,7 +182,7 @@
 						}}>Next</Button
 					>
 				</div>
-			{:else if step == 4}
+			{:else if step == 5}
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide bottom exhaust configuration details
 				</h5>
@@ -227,7 +198,7 @@
 						}}>Next</Button
 					>
 				</div>
-			{:else if step == 5}
+			{:else if step == 6}
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide horitzontal airflow configuration details
 				</h5>
@@ -243,7 +214,7 @@
 						}}>Next</Button
 					>
 				</div>
-			{:else if step == 6}
+			{:else if step == 7}
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide heater 1 configuration details
 				</h5>
@@ -255,6 +226,39 @@
 							{$submitting ? 'submitting' : 'submit'}
 						</Button>
 					</div>
+				</div>
+			{:else if step == 2}
+				<div class="flex flex-col items-center gap-5">
+					<div
+						class="flex h-[200px] w-[200px] items-center justify-center rounded-full bg-gray-100 hover:bg-fuchsia-100"
+					>
+						{#if showImage}
+							{#if isUploading}
+								Uploading......
+							{:else}
+								<img bind:this={image} src="" alt="Preview" class="w-full rounded-full" />
+							{/if}
+						{:else}
+							<PlusOutline class="h-12 w-12" color="gray" />
+						{/if}
+					</div>
+				</div>
+				<div>
+					<input
+						type="file"
+						accept="image/jpeg, image/png, image/jpg"
+						bind:this={input}
+						on:change={onChange}
+					/>
+					<Helper class="my-2">PNG/JPG/JPEG</Helper>
+				</div>
+				<div class="flex justify-between">
+					<Button
+						color="alternative"
+						on:click={() => window.location.reload()}
+						disabled={isUploaded || isUploading}>Reset</Button
+					>
+					<Button on:click={onUploadRequested}>Next</Button>
 				</div>
 			{/if}
 		</form>

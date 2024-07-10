@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { getData } from '$lib/server/utils/DataService';
 import type { Customer } from '$lib/models/customer';
-import { BACKEND_URL } from '$env/static/private';
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { fail, message, superValidate } from 'sveltekit-superforms';
@@ -50,7 +50,7 @@ export const actions: Actions = {
 					}
 				);
 			} else {
-				const deleteResult = await fetch(`${BACKEND_URL}/api/customers/${customerId}`, {
+				const deleteResult = await fetch(`${PUBLIC_BACKEND_URL}/api/customers/${customerId}`, {
 					method: 'DELETE'
 				});
 

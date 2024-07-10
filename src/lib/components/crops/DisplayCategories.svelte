@@ -86,7 +86,7 @@
 									<button class="p-2 hover:bg-white/50">
 										<a href={`/dashboard/crops/category/${category.cropCategoryId}/edit`}>
 											<EditSolid />
-											<Tooltip>Edit product details</Tooltip>
+											<Tooltip>Edit category details</Tooltip>
 										</a>
 									</button>
 
@@ -109,7 +109,7 @@
 			</Table>
 		</div>
 	{:else}
-		<Card color="green" class="center mx-auto max-w-6xl">
+		<Card color="green" class=" mx-auto max-w-6xl">
 			<p class="text-center">
 				No crop categories are added yet click on the plus icon on the toolbar to add new crop
 				category
@@ -127,7 +127,7 @@
 	</h3>
 
 	<form method="POST" action="?/deleteCropCategory" use:enhance>
-		<!-- productId is set right when modal is enabled, I am setting input like this to resolve known superforms bug -->
+		<!-- cropCategoryId is set right when modal is enabled, I am setting input like this to resolve known superforms bug -->
 		<input name="cropCategoryId" bind:value={$form.cropCategoryId} class="hidden" />
 		<Button color="red" class="me-2" disabled={$submitting} type="submit">
 			{#if $submitting}

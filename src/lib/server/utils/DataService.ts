@@ -1,7 +1,7 @@
 import type { ApiData } from '$lib/models/apiData';
-import { BACKEND_URL } from '$env/static/private';
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
-const BASE_URL = BACKEND_URL || '';
+const BASE_URL = PUBLIC_BACKEND_URL || '';
 export async function getData<T>(url: string): Promise<ApiData<T>> {
 	try {
 		const response = await fetch(BASE_URL + url, { cache: 'no-cache' });

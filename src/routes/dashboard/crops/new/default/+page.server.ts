@@ -40,7 +40,10 @@ export const actions: Actions = {
 						status: 403
 					});
 				} else {
-					const respose = await postData('/api/crops', cropData);
+					const respose = await postData<Crop>('/api/crops', {
+						...cropData,
+						configuration: cropData
+					});
 					if (!respose.error) {
 						throw redirect(300, '/dashboard/crops');
 					} else {

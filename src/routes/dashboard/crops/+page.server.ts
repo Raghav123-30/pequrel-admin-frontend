@@ -1,7 +1,7 @@
 import { superValidate, message, fail } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { cropCategoryIdSchema } from '$lib/schemas/cropCategoryIdSchema.js';
-import { BACKEND_URL } from '$env/static/private';
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
 import type { Crop } from '$lib/models/crop.js';
 
@@ -21,7 +21,7 @@ export const actions = {
 		} else {
 			//const deleteResult = await deleteData<Product>(`/api/products/${productId}`);
 			const deleteResult = await fetch(
-				`${BACKEND_URL}/api/crop-categories/${form.data.cropCategoryId}`,
+				`${PUBLIC_BACKEND_URL}/api/crop-categories/${form.data.cropCategoryId}`,
 				{
 					method: 'DELETE'
 				}
