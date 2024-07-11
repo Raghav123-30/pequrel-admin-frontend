@@ -57,7 +57,7 @@ export const actions: Actions = {
 					const response = await putData(`/api/customers/${params.customerId}`, {
 						...customerData,
 						customerId: params.customerId,
-						cropIds: currentCustomerData?.cropIds,
+						setupCrops: currentCustomerData?.setupCrops,
 						productIds: currentCustomerData?.productIds,
 						setupConfigurations: currentCustomerData?.setupConfigurations
 					});

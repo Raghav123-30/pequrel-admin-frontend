@@ -26,7 +26,7 @@
 	import { bottomExhaustConfigSchema } from '$lib/schemas/bottomExhaustConfigSchema';
 	import { horizontalAirflowConfigSchema } from '$lib/schemas/horizontalAirFlowConfigSchema';
 	import CropDataForm from '$lib/components/crops/forms/CropDataForm.svelte';
-	import SuperDebug from 'sveltekit-superforms';
+
 	import { PlusOutline, QuestionCircleSolid } from 'flowbite-svelte-icons';
 	import { Amplify } from 'aws-amplify';
 	import awsmobile from '../../../../../aws-exports';
@@ -129,8 +129,6 @@
 
 	let step = 1;
 </script>
-
-<SuperDebug data={form} />
 
 <div class="px-8 py-20">
 	<div class="mx-auto my-8 max-w-6xl">

@@ -5,6 +5,11 @@ type SetupConfigurationItem = {
 	configuration: Configuration;
 };
 
+type SetupCropItem = {
+	productId: string;
+	cropId: string;
+};
+
 export type Customer = {
 	customerId?: string;
 	productIds?: string[];
@@ -17,4 +22,5 @@ export type Customer = {
 	setupCity: string;
 	setupAddress: string;
 	setupConfigurations?: SetupConfigurationItem[];
+	setupCrops?: SetupCropItem[];
 };
