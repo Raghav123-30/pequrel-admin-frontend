@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types';
 import { getData } from '$lib/server/utils/DataService';
 import type { Customer } from '$lib/models/customer';
 import { PUBLIC_BACKEND_URL } from '$env/static/public';
-import type { Actions } from '@sveltejs/kit';
+import { redirect, type Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -55,11 +55,9 @@ export const actions: Actions = {
 				});
 
 				if (!deleteResult.ok) {
-					return message(form, 'Could not delete customer data.Please try again later', {
-						status: 403
-					});
+					return message(form, 'Something went wrong', { status: 403 });
 				} else {
-					return message(form, 'Deleted customer data successfully');
+					throw redirect(300, '/dashboard/customers');
 				}
 			}
 		}

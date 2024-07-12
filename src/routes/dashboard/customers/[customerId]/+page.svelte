@@ -46,14 +46,14 @@
 			});
 		}
 	});
-	onDestroy(() => {
-		toastStore.set({
-			page: 'customers',
-			show: false,
-			message: '',
-			type: 'success'
-		});
-	});
+	// onDestroy(() => {
+	// 	toastStore.set({
+	// 		page: 'customers',
+	// 		show: false,
+	// 		message: '',
+	// 		type: 'success'
+	// 	});
+	// });
 </script>
 
 <div class="space-y-4 px-8 py-10">

@@ -6,19 +6,21 @@
 	import { superForm } from 'sveltekit-superforms';
 
 	const { form, enhance, submitting, message } = superForm(data.form, {
-		applyAction: true,
-		invalidateAll: 'force',
 		onResult: ({ result }) => {
-			if (result.type == 'success') {
+			if (result.type == 'redirect') {
 				toastStore.set({
-					message: 'Deleted customer data successfully',
+					message: 'Customer data has been deleted successfully',
 					page: 'customers',
 					show: true,
 					type: 'success'
 				});
-				setTimeout(() => {
-					window.location.reload();
-				}, 2000);
+			} else if (result.type == 'error') {
+				toastStore.set({
+					message: 'Something went wrong.Please try again later',
+					page: 'customers',
+					show: true,
+					type: 'error'
+				});
 			}
 		}
 	});
@@ -45,15 +47,6 @@
 				type: 'error'
 			});
 		}
-	});
-
-	onDestroy(() => {
-		toastStore.set({
-			page: '#',
-			show: false,
-			message: '',
-			type: 'success'
-		});
 	});
 </script>
 

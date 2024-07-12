@@ -40,7 +40,7 @@ export const actions: Actions = {
 					status: 403
 				});
 			} else {
-				throw redirect(303, `/dashboard/customers/${params.customerId}`);
+				throw redirect(300, `/dashboard/customers/${params.customerId}`);
 			}
 		} else {
 			return message(form, `Could not add new product to customer please try again later`, {
@@ -81,7 +81,7 @@ export const actions: Actions = {
 						}
 					);
 				} else {
-					throw redirect(303, `/dashboard/customers/${params.customerId}`);
+					throw redirect(300, `/dashboard/customers/${params.customerId}`);
 				}
 			}
 		} else {
