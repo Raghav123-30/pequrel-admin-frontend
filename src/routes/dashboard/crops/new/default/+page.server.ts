@@ -4,13 +4,25 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { getData, postData } from '$lib/server/utils/DataService';
 import type { Crop } from '$lib/models/crop';
+//import type { CropCategory } from '$lib/models/cropCategory';
 
 export const load = async () => {
 	const form = await superValidate(zod(cropSchema));
+	//const cropCategoriesResponse = await getData<CropCategory[]>('/api/crop-categories');
 
+	// if (cropCategoriesResponse.error) {
 	return {
+		error: true,
 		form: form
+		//cropCategories: [] as CropCategory[]
 	};
+	// } else {
+	// 	return {
+	// 		error: false,
+	// 		form: form,
+	//cropCategories: cropCategoriesResponse.data! as CropCategory[]
+	// 	};
+	// }
 };
 
 export const actions: Actions = {

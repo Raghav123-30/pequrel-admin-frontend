@@ -5,6 +5,23 @@ import { message, fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { redirect } from '@sveltejs/kit';
 
+// export const load = async () => {
+// 	const cropCategoriesResponse = await getData<CropCategory[]>('/api/crop-categories');
+// 	if (cropCategoriesResponse.error) {
+// 		return {
+// 			error: true,
+
+// 			cropCategories: [] as CropCategory[]
+// 		};
+// 	} else {
+// 		return {
+// 			error: false,
+
+// 			cropCategories: cropCategoriesResponse.data! as CropCategory[]
+// 		};
+// 	}
+// };
+
 export const actions = {
 	default: async ({ request, params }) => {
 		const form = await superValidate(request, zod(cropCategorySchema));

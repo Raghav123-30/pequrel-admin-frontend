@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { superForm } from 'sveltekit-superforms';
 	export let data;
-	const { allCropCategories } = data;
+	const { cropCategories } = data;
 
 	import { Toast, Card, Button } from 'flowbite-svelte';
 	import DisplayError from '$lib/components/utils/DisplayError.svelte';
@@ -14,9 +14,7 @@
 	import { cropCategorySchema } from '$lib/schemas/cropCategorySchema.js';
 	const cropCategoryId = $page.params.cropCategoryId;
 	import toastStore from '$lib/stores/toastStore.js';
-	const categoryToBeUpdated = allCropCategories.find(
-		(item) => (item.cropCategoryId = cropCategoryId)
-	);
+	const categoryToBeUpdated = cropCategories.find((item) => (item.cropCategoryId = cropCategoryId));
 	const {
 		form: categoryForm,
 		enhance,

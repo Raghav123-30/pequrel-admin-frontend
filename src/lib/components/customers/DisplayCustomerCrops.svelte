@@ -84,6 +84,7 @@
 					<TableHeadCell>Crop image</TableHeadCell>
 
 					<TableHeadCell>Crop name</TableHeadCell>
+					<TableHeadCell>Mode</TableHeadCell>
 					<TableHeadCell>Actions</TableHeadCell>
 				</TableHead>
 				<TableBody>
@@ -94,6 +95,9 @@
 							</TableBodyCell>
 							<TableBodyCell>
 								{crop.cropNameEnglish}
+							</TableBodyCell>
+							<TableBodyCell>
+								{crop.mode}
 							</TableBodyCell>
 
 							<TableHeadCell>

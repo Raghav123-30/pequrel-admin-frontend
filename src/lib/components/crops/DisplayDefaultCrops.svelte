@@ -42,9 +42,12 @@
 		}
 	});
 	const getCropCategoryName = (cropCategoryId: string) => {
-		const categoryName = categories.find(
-			(item) => (item.cropCategoryId = cropCategoryId)
-		)?.cropCategoryNameEnglish;
+		let categoryName = '';
+		for (let i = 0; i < categories.length; i++) {
+			if (categories[i].cropCategoryId === cropCategoryId) {
+				categoryName = categories[i].cropCategoryNameEnglish;
+			}
+		}
 		return categoryName;
 	};
 </script>
@@ -104,8 +107,8 @@
 
 							<TableHeadCell>{crop.cropNameKannada}</TableHeadCell>
 							<TableHeadCell>{crop.cropNameHindi}</TableHeadCell>
-							<TableHeadCell>{crop.mode == false ? 'Drying' : 'Growing'}</TableHeadCell>
-							<TableHeadCell>{getCropCategoryName(crop.cropCategoryId) || 'N/A'}</TableHeadCell>
+							<TableHeadCell>{crop.mode}</TableHeadCell>
+							<TableHeadCell>{getCropCategoryName(crop.cropCategoryId)}</TableHeadCell>
 							<TableHeadCell>
 								<div class="flex gap-2">
 									<button class="p-2 hover:bg-white/50">

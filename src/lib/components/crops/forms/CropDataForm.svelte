@@ -5,7 +5,6 @@
 	export let form;
 	export let errors;
 	export let isDefault;
-	export let allCategories: CropCategory[];
 
 	onMount(() => {
 		if (isDefault) {
@@ -25,12 +24,8 @@
 			value: 'Growing'
 		}
 	];
-	const allCategoriesItems = allCategories.map((item) => {
-		return {
-			name: item.cropCategoryNameEnglish,
-			value: item.cropCategoryId
-		};
-	});
+
+	export let allCategoriesItems;
 </script>
 
 <div class="space-y-4">
@@ -88,6 +83,7 @@
 		name="cropCategoryId"
 		color={$errors.cropCategoryId && 'red'}
 	/>
+
 	{#if $errors.cropCategoryId}
 		<Helper color="red">{$errors.cropCategoryId}</Helper>
 	{/if}

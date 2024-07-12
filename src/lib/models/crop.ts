@@ -8,7 +8,7 @@ export type Crop = {
 	cropNameHindi: string;
 	default: boolean;
 	city: string;
-	mode: boolean;
+	mode: string;
 	configuration: Configuration;
 	imgUrl: string;
 };

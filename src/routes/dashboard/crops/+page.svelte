@@ -9,7 +9,7 @@
 	import { Card } from 'flowbite-svelte';
 	import DisplayDefaultCrops from '$lib/components/crops/DisplayDefaultCrops.svelte';
 	export let data;
-	const { allCropCategories, allCrops } = data;
+	const { cropCategories, allCrops } = data;
 	const defaultCrops = allCrops.filter((item) => item.default === true);
 	const specificCrops = allCrops.filter((item) => item.default === false);
 	const { form, enhance, errors, submitting, message } = superForm(data.cropCategoryIdForm, {
@@ -38,20 +38,16 @@
 			});
 		}
 	});
+	console.log('categories are as follows');
+	console.log(data);
 </script>
 
 <div class="space-y-6">
 	<Card class="mx-auto my-4 max-w-6xl p-2" color="none">
-		<DisplayCategories categories={allCropCategories} {form} {enhance} {submitting} />
+		<DisplayCategories categories={cropCategories} {form} {enhance} {submitting} />
 	</Card>
 	<Card class="mx-auto my-4 max-w-6xl p-2" color="none">
-		<DisplayDefaultCrops
-			categories={allCropCategories}
-			{defaultCrops}
-			{form}
-			{enhance}
-			{submitting}
-		/>
+		<DisplayDefaultCrops categories={cropCategories} {defaultCrops} {form} {enhance} {submitting} />
 	</Card>
 </div>
 

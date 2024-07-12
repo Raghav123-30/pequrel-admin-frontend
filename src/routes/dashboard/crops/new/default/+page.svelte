@@ -30,6 +30,7 @@
 	import { PlusOutline, QuestionCircleSolid } from 'flowbite-svelte-icons';
 	import { Amplify } from 'aws-amplify';
 	import awsmobile from '../../../../../aws-exports';
+	import SuperDebug from 'sveltekit-superforms';
 	function uuidv4() {
 		return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) =>
 			(+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
@@ -127,8 +128,18 @@
 		return result.valid;
 	};
 
+	const { cropCategories } = data;
+	const allCategoriesItems = cropCategories.map((item) => {
+		return {
+			name: item.cropCategoryNameEnglish,
+			value: item.cropCategoryId
+		};
+	});
+
 	let step = 1;
 </script>
+
+<SuperDebug data={form} />
 
 <div class="px-8 py-20">
 	<div class="mx-auto my-8 max-w-6xl">
@@ -141,7 +152,7 @@
 				<h5 class=" mb-8 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 					Provide crop details
 				</h5>
-				<CropDataForm {form} {errors} isDefault={true} allCategories={data.allCropCategories} />
+				<CropDataForm isDefault={true} {form} {errors} {allCategoriesItems} />
 				<div class="flex justify-end">
 					<Button
 						on:click={async () => {

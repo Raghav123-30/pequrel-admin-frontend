@@ -1,28 +1,29 @@
 import type { Crop } from '$lib/models/crop';
-import type { CropCategory } from '$lib/models/cropCategory';
+
 import { getData } from '$lib/server/utils/DataService';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { cropCategorySchema } from '$lib/schemas';
+import type { CropCategory } from '$lib/models/cropCategory';
 
 export const load = async () => {
-	const cropCategoriesResponse = await getData<CropCategory[]>('/api/crop-categories');
 	const cropsResponse = await getData<Crop[]>('/api/crops');
 	const categoryForm = await superValidate(zod(cropCategorySchema));
+	const cropCategoriesResponse = await getData<CropCategory[]>('/api/crop-categories');
 
-	if (cropCategoriesResponse.error || cropsResponse.error) {
+	if (cropsResponse.error) {
 		return {
+			cropCategories: [] as CropCategory[],
 			categoryForm: categoryForm,
 			error: true,
-			allCrops: [] as Crop[],
-			allCropCategories: [] as CropCategory[]
+			allCrops: [] as Crop[]
 		};
 	} else {
 		return {
+			cropCategories: cropCategoriesResponse.data as CropCategory[],
 			categoryForm: categoryForm,
 			error: false,
-			allCrops: cropsResponse.data as Crop[],
-			allCropCategories: cropCategoriesResponse.data as CropCategory[]
+			allCrops: cropsResponse.data as Crop[]
 		};
 	}
 };
