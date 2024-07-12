@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import type { Actions } from '@sveltejs/kit';
+import { redirect, type Actions } from '@sveltejs/kit';
 import { getData, putData } from '$lib/server/utils/DataService';
 import type { Customer } from '$lib/models/customer';
 import { message } from 'sveltekit-superforms';
@@ -40,10 +40,7 @@ export const actions: Actions = {
 					status: 403
 				});
 			} else {
-				return message(
-					form,
-					`New product is added for ${customerData?.customerName} successfully `
-				);
+				throw redirect(303, `/dashboard/customers/${params.customerId}`);
 			}
 		} else {
 			return message(form, `Could not add new product to customer please try again later`, {
@@ -52,6 +49,7 @@ export const actions: Actions = {
 		}
 	},
 	deleteProduct: async ({ request, params }) => {
+		console.log('Request reached here');
 		const form = await superValidate(request, zod(productIdSchema));
 		const customerResult = await getData<Customer>(`/api/customers/${params.customerId}`);
 		console.log(customerResult);
@@ -83,10 +81,7 @@ export const actions: Actions = {
 						}
 					);
 				} else {
-					return message(
-						form,
-						`This product is deleted from ${customerData?.customerName} successfully `
-					);
+					throw redirect(303, `/dashboard/customers/${params.customerId}`);
 				}
 			}
 		} else {

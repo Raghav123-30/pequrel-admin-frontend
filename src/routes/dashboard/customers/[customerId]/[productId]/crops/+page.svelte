@@ -18,14 +18,17 @@
 			console.log('submitting');
 		},
 		onResult: ({ result }) => {
-			if (result.type === 'success') {
-				setTimeout(() => {
-					window.location.reload();
-				}, 1500);
+			if (result.type === 'redirect') {
+				toastStore.set({
+					page: 'customers',
+					message: 'You have successfully edited crops record for the product of your customer',
+					show: true,
+					type: 'success'
+				});
 			} else if (result.type == 'error') {
 				toastStore.set({
-					page: 'crops',
-					message: 'Failed,please try again later',
+					page: 'customers',
+					message: 'Failed to edit crops record,please try again later',
 					show: true,
 					type: 'error'
 				});
@@ -57,7 +60,7 @@
 	/>
 </div>
 
-{#if $toastStore.show && $toastStore.page === 'crops'}
+{#if $toastStore.show && $toastStore.page === 'customers'}
 	<div class="fixed bottom-10 right-10">
 		<Toast color={$toastStore.type == 'error' ? 'red' : 'green'}>
 			<div class="flex items-center gap-4">

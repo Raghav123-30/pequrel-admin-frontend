@@ -18,13 +18,17 @@
 	const { form, errors, enhance, message, submitting } = superForm(data.form, {
 		validators: zod(productIdSchema),
 		onResult: async ({ result }) => {
-			if (result.type == 'success') {
-				setTimeout(() => {
-					window.location.reload();
-				}, 1500);
+			if (result.type == 'redirect') {
+				console.log('setting toast');
+				toastStore.set({
+					message: 'You have successfully edited product record of your customer ',
+					page: 'customers',
+					show: true,
+					type: 'success'
+				});
 			} else if (result.type == 'error') {
 				toastStore.set({
-					message: 'Failed to add new product',
+					message: 'Failed to edit product record of your customer',
 					page: 'customers',
 					show: true,
 					type: 'error'

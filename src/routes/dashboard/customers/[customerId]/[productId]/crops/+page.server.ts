@@ -1,6 +1,7 @@
 import type { Customer } from '$lib/models/customer.js';
 import { cropIdSchema } from '$lib/schemas';
 import { getData, putData } from '$lib/server/utils/DataService.js';
+import { redirect } from '@sveltejs/kit';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
@@ -35,7 +36,7 @@ export const actions = {
 				if (updatedCustomerResponse.error) {
 					return message(form, 'Could not add new crop.Try again later', { status: 403 });
 				} else {
-					return message(form, 'Successfully added new crop');
+					throw redirect(303, `/dashboard/customers/${customerId}/${productId}/crops`);
 				}
 			}
 		}
@@ -64,7 +65,7 @@ export const actions = {
 				if (updatedCustomerResponse.error) {
 					return message(form, 'Could not add delete crop.Try again later', { status: 403 });
 				} else {
-					return message(form, 'Successfully deleted the crop');
+					throw redirect(303, `/dashboard/customers/${customerId}/${productId}/crops`);
 				}
 			}
 		}
