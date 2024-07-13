@@ -27,8 +27,10 @@
 		setup via graphs and also lets you download them. In addition to that, it lets you view the
 		current configuration and notifications regarding the same about configuration updates. It also
 		lets you list all the products owned by the customer along with allowing you to add new products
-		or remove existing ones. Furthermore, it lets you get the API documentation you need for
-		embedded programming.
+		or remove existing ones.After chosing one of the product from the selection list you can also
+		list all the crops for which customer has received training to deploy on their setup, you can
+		also add more crops given that customer's training process is complete. Furthermore, it lets you
+		get the API documentation you need for embedded programming.
 	</p>
 
 	<Button class="w-fit" on:click={() => (showModal = true)}>Select product</Button>

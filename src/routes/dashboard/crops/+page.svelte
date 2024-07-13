@@ -8,6 +8,7 @@
 	import { cropCategoryIdSchema } from '$lib/schemas/cropCategoryIdSchema.js';
 	import { Card } from 'flowbite-svelte';
 	import DisplayDefaultCrops from '$lib/components/crops/DisplayDefaultCrops.svelte';
+	import DisplaySpecificCrops from '$lib/components/crops/DisplaySpecificCrops.svelte';
 	export let data;
 	const { cropCategories, allCrops } = data;
 	const defaultCrops = allCrops.filter((item) => item.default === true);
@@ -48,6 +49,15 @@
 	</Card>
 	<Card class="mx-auto my-4 max-w-6xl p-2" color="none">
 		<DisplayDefaultCrops categories={cropCategories} {defaultCrops} {form} {enhance} {submitting} />
+	</Card>
+	<Card class="mx-auto my-4 max-w-6xl p-2" color="none">
+		<DisplaySpecificCrops
+			categories={cropCategories}
+			{specificCrops}
+			{form}
+			{enhance}
+			{submitting}
+		/>
 	</Card>
 </div>
 

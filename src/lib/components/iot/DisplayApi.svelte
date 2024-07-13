@@ -16,6 +16,7 @@
 				tooltipText = 'copied to clipboard';
 				setTimeout(() => {
 					showCheckedIcon.set(false);
+					tooltipText = 'copy to clipboard';
 				}, 3000);
 			})
 			.catch((err) => {

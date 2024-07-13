@@ -112,7 +112,7 @@
 							<TableHeadCell>
 								<div class="flex gap-2">
 									<button class="p-2 hover:bg-white/50">
-										<a href={`/dashboard/crops/crop/${crop.cropCategoryId}/edit`}>
+										<a href={`/dashboard/crops/${crop.cropId}/edit`}>
 											<EditSolid />
 											<Tooltip>Edit product details</Tooltip>
 										</a>

@@ -12,7 +12,7 @@ export const load = async () => {
 
 	// if (cropCategoriesResponse.error) {
 	return {
-		error: true,
+		error: false,
 		form: form
 		//cropCategories: [] as CropCategory[]
 	};
