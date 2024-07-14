@@ -29,6 +29,7 @@
 	} from 'flowbite-svelte-icons';
 	let searchTerm = '';
 	let defaultCropToBeDeleted = '';
+	let regionOfCrop = '';
 	let showModal = false;
 	let cropToBeViewed: Crop;
 	let showCropModal = false;
@@ -95,6 +96,7 @@
 								<button
 									on:click={() => {
 										cropToBeViewed = crop;
+
 										showCropModal = true;
 									}}
 								>
@@ -114,7 +116,7 @@
 									<button class="p-2 hover:bg-white/50">
 										<a href={`/dashboard/crops/${crop.cropId}/edit`}>
 											<EditSolid />
-											<Tooltip>Edit product details</Tooltip>
+											<Tooltip>Edit crop details</Tooltip>
 										</a>
 									</button>
 
@@ -149,8 +151,8 @@
 	<ExclamationCircleOutline class="mx-auto mb-4 h-12 w-12 text-gray-400 dark:text-gray-200" />
 	<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
 		Are you sure you want to delete this default crop ? <span class="font-bold"
-			>{defaultCropToBeDeleted}</span
-		>
+			>{defaultCropToBeDeleted}
+		</span>
 	</h3>
 
 	<form method="POST" action="?/deleteDefaultCrop" use:enhance>

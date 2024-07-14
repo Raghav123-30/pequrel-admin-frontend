@@ -29,6 +29,7 @@
 	} from 'flowbite-svelte-icons';
 	let searchTerm = '';
 	let specificCropToBeDeleted = '';
+	let regionOfCrop = '';
 	let showModal = false;
 	let cropToBeViewed: Crop;
 	let showCropModal = false;
@@ -106,13 +107,15 @@
 							</TableBodyCell>
 
 							<TableBodyCell>{crop.city}</TableBodyCell>
+							<TableBodyCell>{crop.mode}</TableBodyCell>
 							<TableBodyCell>{getCropCategoryName(crop.cropCategoryId)}</TableBodyCell>
-							<TableBodyCell>
+
+							<TableHeadCell>
 								<div class="flex gap-2">
 									<button class="p-2 hover:bg-white/50">
 										<a href={`/dashboard/crops/${crop.cropId}/edit`}>
 											<EditSolid />
-											<Tooltip>Edit product details</Tooltip>
+											<Tooltip>Edit crop details</Tooltip>
 										</a>
 									</button>
 
@@ -121,6 +124,7 @@
 										on:click={() => {
 											showModal = true;
 											specificCropToBeDeleted = crop.cropNameEnglish;
+											regionOfCrop = crop.city;
 											form.set({ cropId: crop.cropId || 'ERROR' });
 										}}
 									>
@@ -128,7 +132,7 @@
 										<Tooltip>Delete crop</Tooltip>
 									</button>
 								</div>
-							</TableBodyCell>
+							</TableHeadCell>
 						</TableBodyRow>
 					{/each}
 				</TableBody>
@@ -146,8 +150,8 @@
 <Modal title="Are you absolutely sure?" bind:open={showModal} size="xs">
 	<ExclamationCircleOutline class="mx-auto mb-4 h-12 w-12 text-gray-400 dark:text-gray-200" />
 	<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-		Are you sure you want to delete this default crop ? <span class="font-bold"
-			>{specificCropToBeDeleted}</span
+		Are you sure you want to delete this specific crop ? <span class="font-bold"
+			>{specificCropToBeDeleted} from {regionOfCrop}</span
 		>
 	</h3>
 

@@ -9,5 +9,11 @@
 {#if error}
 	<DisplayError message="That crop does not exist" />
 {:else}
-	<CropFullForm isEditing={true} {data} cropCategories={data.cropCategories} {crop} />
+	<CropFullForm
+		isEditing={true}
+		isDefault={true}
+		{data}
+		cropCategories={data.cropCategories}
+		{crop}
+	/>
 {/if}
