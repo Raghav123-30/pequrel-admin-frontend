@@ -38,6 +38,7 @@
 	let cropToDelete = '';
 
 	const cropSelectionList = cropsData
+		.filter((item) => item.city === 'default')
 		.map((crop) => {
 			return {
 				name: crop.cropNameEnglish,
