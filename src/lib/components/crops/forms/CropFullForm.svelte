@@ -163,8 +163,6 @@
 	});
 </script>
 
-<SuperDebug data={form} />
-
 <div class="px-8 py-20">
 	<div class="mx-auto my-8 max-w-6xl">
 		<Progressbar progress={(step / 7) * 100} />
