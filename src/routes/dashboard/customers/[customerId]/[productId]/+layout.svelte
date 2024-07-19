@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { Card } from 'flowbite-svelte';
-	import { StoreSolid, SunSolid, LightbulbSolid, GridSolid } from 'flowbite-svelte-icons';
+	import {
+		StoreSolid,
+		SunSolid,
+		LightbulbSolid,
+		GridSolid,
+		BellActiveSolid
+	} from 'flowbite-svelte-icons';
 	import { page } from '$app/stores';
 	const productId = $page.params.productId;
 	const customerId = $page.params.customerId;
@@ -44,6 +50,12 @@
 		>
 			<GridSolid></GridSolid>
 			<a href={`/dashboard/customers/${customerId}/${productId}/crops`}>Crops</a>
+		</div>
+		<div
+			class={`flex items-center gap-2 hover:text-red-500 ${$page.url.pathname.includes('activity') && 'font-bold text-red-500'}`}
+		>
+			<BellActiveSolid></BellActiveSolid>
+			<a href={`/dashboard/customers/${customerId}/${productId}/activity`}>Activity</a>
 		</div>
 	</Card>
 </div>
