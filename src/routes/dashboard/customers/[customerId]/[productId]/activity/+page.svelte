@@ -16,8 +16,8 @@
 {#if error}
 	<DisplayError message="Failed to load activity data" />
 {:else}
-	<div>
-		<Card class="mx-auto max-w-6xl px-8">
+	<div class="mx-auto max-w-6xl p-8">
+		<Card class="mx-auto max-w-6xl">
 			<Table>
 				<TableHead>
 					<TableHeadCell>Activity</TableHeadCell>
