@@ -40,8 +40,9 @@ export const actions: Actions = {
 				});
 			} else {
 				const allCrops = allCropsResponse.data;
+				const specificCrops = allCrops?.filter((item) => item.default === false);
 				if (
-					allCrops?.find(
+					specificCrops?.find(
 						(crop) =>
 							crop.cropNameEnglish.trim().toLowerCase() ===
 								form.data.cropNameEnglish.trim().toLowerCase() &&
@@ -52,7 +53,7 @@ export const actions: Actions = {
 					console.log('Its failing here');
 					return message(
 						form,
-						`Specific Crop with name ${form.data.cropNameEnglish} already exists in ${form.data.city}`,
+						`Specific Crop with name ${form.data.cropNameEnglish} and mode ${form.data.mode} already exists in ${form.data.city}`,
 						{
 							status: 403
 						}

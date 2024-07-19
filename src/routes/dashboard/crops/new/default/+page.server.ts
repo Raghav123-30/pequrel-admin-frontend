@@ -41,14 +41,16 @@ export const actions: Actions = {
 				});
 			} else {
 				const allCrops = allCropsResponse.data;
+				const defaultCrops = allCrops?.filter((item) => item.default === true);
+
 				if (
-					allCrops?.find(
+					defaultCrops?.find(
 						(crop) =>
 							crop.cropNameEnglish.trim().toLowerCase() ===
-							form.data.cropNameEnglish.trim().toLowerCase()
+								form.data.cropNameEnglish.trim().toLowerCase() && crop.mode === form.data.mode
 					)
 				) {
-					return message(form, 'Crop with that name already exists', {
+					return message(form, 'Default Crop with that name and mode already exists', {
 						status: 403
 					});
 				} else {

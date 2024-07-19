@@ -55,14 +55,40 @@
 		};
 	});
 	let cropState = '';
-	const defaultCropSelection = crops.map((item) => {
-		return {
-			name: item.cropNameEnglish,
-			value: item.cropId
-		};
-	});
+	$: defaultCropSelection = crops
+		.filter((item) => item.mode == mode)
+		.map((item) => {
+			return {
+				name: item.cropNameEnglish,
+				value: item.cropId
+			};
+		});
 	let cropId = '';
+	let mode = '';
+	const modeSelectionList = [
+		{
+			name: 'Drying',
+			value: 'Drying'
+		},
+		{
+			name: 'Growing',
+			value: 'Growing'
+		}
+	];
 </script>
+
+<div class={`space-y-4 ${isDefault && 'hidden'}`}>
+	<Label>Mode</Label>
+	<Select
+		bind:value={mode}
+		placeholder="Select a mode"
+		items={modeSelectionList}
+		on:change={() => {
+			$form.city = '';
+			cropId = '';
+		}}
+	/>
+</div>
 
 <div class={`space-y-4 ${!isDefault && 'hidden'}`}>
 	<Label>Crop name</Label>
@@ -78,6 +104,7 @@
 <div class={`space-y-4 ${isDefault && 'hidden'}`}>
 	<Label>Crop name</Label>
 	<Select
+		disabled={!mode}
 		on:change={() => {
 			const cropOfInterest = crops.find((item) => item.cropId === cropId);
 			if (cropOfInterest) {
