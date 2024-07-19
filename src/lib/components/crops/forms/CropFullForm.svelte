@@ -65,10 +65,12 @@
 	}
 	export let data;
 	export let isEditing: boolean;
+	export let cropRegisterationErrorMessage = '';
 	const { form, enhance, errors, submitting, message, validateForm } = superForm(data.form, {
 		validators: zod(cropSchema),
 		dataType: 'json',
 		onSubmit: () => {
+			cropRegisterationErrorMessage = '';
 			console.log($form);
 		},
 		onResult: ({ result }) => {
@@ -81,6 +83,11 @@
 					type: 'success'
 				});
 			}
+		}
+	});
+	message.subscribe((value) => {
+		if (value && value != 'SUCCESS') {
+			cropRegisterationErrorMessage = value;
 		}
 	});
 	let isUploading = false;
@@ -271,6 +278,13 @@
 						<Button type="submit" disabled={$submitting}>
 							{$submitting ? 'submitting' : 'submit'}
 						</Button>
+					</div>
+					<div>
+						{#if cropRegisterationErrorMessage}
+							<Helper color="red">
+								{cropRegisterationErrorMessage}
+							</Helper>
+						{/if}
 					</div>
 				</div>
 			{:else if step == 2}

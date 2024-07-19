@@ -15,6 +15,12 @@
 	const { form, errors, submitting, enhance, message } = superForm(data.cropIdform, {
 		validators: zod(cropIdSchema),
 		onSubmit: () => {
+			toastStore.set({
+				page: 'customers',
+				message: '',
+				show: false,
+				type: 'success'
+			});
 			console.log('submitting');
 		},
 		onResult: ({ result }) => {
@@ -39,7 +45,7 @@
 	message.subscribe((message) => {
 		if (message) {
 			toastStore.set({
-				page: 'crops',
+				page: 'customers',
 				message: message,
 				show: true,
 				type: 'success'

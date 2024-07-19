@@ -15,6 +15,14 @@
 	const specificCrops = allCrops.filter((item) => item.default === false);
 	const { form, enhance, errors, submitting, message } = superForm(data.cropCategoryIdForm, {
 		validators: zod(cropCategoryIdSchema),
+		onSubmit: () => {
+			toastStore.set({
+				page: 'crops',
+				message: '',
+				show: false,
+				type: 'success'
+			});
+		},
 		onResult: ({ result }) => {
 			if (result.type == 'success') {
 				toastStore.set({

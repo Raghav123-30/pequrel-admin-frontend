@@ -103,7 +103,9 @@
 								</button>
 							</TableBodyCell>
 							<TableBodyCell>
-								{crop.cropNameEnglish}
+								<a href={`/dashboard/crops/${crop.cropId}`} class="text-blue-500 hover:underline">
+									{crop.cropNameEnglish}
+								</a>
 							</TableBodyCell>
 
 							<TableBodyCell>{crop.city}</TableBodyCell>
@@ -119,7 +121,7 @@
 										</a>
 									</button>
 
-									<button
+									<!-- <button
 										class="p-2 hover:bg-white/50"
 										on:click={() => {
 											showModal = true;
@@ -130,7 +132,7 @@
 									>
 										<TrashBinSolid />
 										<Tooltip>Delete crop</Tooltip>
-									</button>
+									</button> -->
 								</div>
 							</TableHeadCell>
 						</TableBodyRow>
