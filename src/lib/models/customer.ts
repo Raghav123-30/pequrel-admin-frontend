@@ -21,6 +21,7 @@ export type Customer = {
 	setupState: string;
 	setupCity: string;
 	setupAddress: string;
+	hasRegistered?: boolean;
 	setupConfigurations?: SetupConfigurationItem[];
 	setupCrops?: SetupCropItem[];
 };

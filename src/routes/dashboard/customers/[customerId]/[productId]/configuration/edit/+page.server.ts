@@ -3,9 +3,9 @@ import { configurationSchema } from '$lib/schemas/configurationSchema';
 import { zod } from 'sveltekit-superforms/adapters';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { fail } from 'sveltekit-superforms';
-import { getData, putData } from '$lib/server/utils/DataService.js';
+import { getData, postData, putData } from '$lib/server/utils/DataService.js';
 import type { Customer } from '$lib/models/customer.js';
-
+import type { Notification } from '$lib/models/notification.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async () => {
@@ -38,6 +38,14 @@ export const actions = {
 					return config;
 				});
 
+				const notification: Notification = {
+					modifiedBy: 'Customer',
+					message: 'Admin has updated the configuration',
+					modifiedAt: new Date(),
+					productId: productId,
+					customerId: customerId
+				};
+				await postData<Notification>('/api/notifications', notification);
 				const respose = await putData(`/api/customers/${customerId}`, customer);
 				if (!respose.error) {
 					throw redirect(300, `/dashboard/customers/${customerId}/${productId}/configuration`);
