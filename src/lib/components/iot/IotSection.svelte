@@ -3,13 +3,15 @@
 	import type { Product } from '$lib/models/product';
 	import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
 	import { goto } from '$app/navigation';
+	import type { Customer } from '$lib/models/customer';
 	let showModal = false;
 
 	export let productsData: Product[];
-	export let customerData;
+	export let customerData: Customer;
 	let selectedProduct = '';
+	const customerProductIds = customerData.customerProducts.map((item) => item.productId);
 	const customerProducts = productsData.filter((product) =>
-		customerData.productIds?.includes(product.productId!)
+		customerProductIds?.includes(product.productId!)
 	);
 	const customerPoductSelectionList = customerProducts.map((customerProduct) => {
 		return {

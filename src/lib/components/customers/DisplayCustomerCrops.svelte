@@ -3,14 +3,18 @@
 	import type { Customer } from '$lib/models/customer';
 	import type { Product } from '$lib/models/product';
 	export let cropsData: Crop[];
+	export let allCrops: Crop[];
 	export let customerData: Customer;
 	export let form;
 	export let errors;
 	export let product: Product;
 	export let enhance;
 	export let submitting;
+	export let productId;
 
-	const customerCropsIds = customerData.setupCrops?.map((item) => item.cropId);
+	const customerCropsIds = customerData.setupCrops
+		?.filter((item) => item.productId == productId)
+		.map((item) => item.cropId);
 	const customerCrops = cropsData.filter((crop) => customerCropsIds?.includes(crop.cropId!));
 
 	import {
@@ -37,7 +41,7 @@
 	let showDeleteCropModal = false;
 	let cropToDelete = '';
 
-	const cropSelectionList = cropsData
+	const cropSelectionList = allCrops
 		.filter((item) => item.city === 'default')
 		.map((crop) => {
 			return {
@@ -46,6 +50,9 @@
 			};
 		})
 		.filter((item) => !customerCropsIds!.includes(item.value!));
+
+	console.log(cropsData);
+	console.log(customerCropsIds);
 	submitting.subscribe((value: boolean) => {
 		if (value) {
 			showAddCropModal = false;

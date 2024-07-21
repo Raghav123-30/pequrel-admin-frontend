@@ -2,34 +2,7 @@
 	export let form;
 	export let errors;
 
-	import { Country, State, City, type IState } from 'country-state-city';
-	import { Label, Input, Helper, Select, Textarea } from 'flowbite-svelte';
-
-	const countries = Country.getAllCountries();
-	const india = countries[100];
-	const states = State.getStatesOfCountry(india.isoCode);
-	let selectedState: IState;
-
-	if ($form.setupState) {
-		let currentState = states.find((state) => state.name === $form.setupState);
-		if (currentState) {
-			selectedState = currentState;
-		}
-	}
-
-	$: formattedCities = City.getCitiesOfState(india.isoCode, selectedState?.isoCode)?.map((item) => {
-		return {
-			value: item.name,
-			name: item.name
-		};
-	});
-
-	const formattedStates = states.map((item) => {
-		return {
-			value: item.name,
-			name: item.name
-		};
-	});
+	import { Label, Input, Helper } from 'flowbite-svelte';
 </script>
 
 <div class="space-y-4">
@@ -78,52 +51,5 @@
 	/>
 	{#if $errors.customerAddress}
 		<Helper color="red">{$errors.customerAddress}</Helper>
-	{/if}
-</div>
-
-<div class="space-y-4">
-	<Label>State of the setup</Label>
-	<Select
-		placeholder="Choose state"
-		items={formattedStates}
-		bind:value={$form.setupState}
-		on:change={() => {
-			$form.setupCity = '';
-			let currentState = states.find((state) => state.name === $form.setupState);
-			if (currentState) {
-				selectedState = currentState;
-			}
-		}}
-		name="setupState"
-		color={$errors.setupState && 'red'}
-	/>
-	{#if $errors.setupState}
-		<Helper color="red">{$errors.setupState}</Helper>
-	{/if}
-</div>
-<div class="space-y-4">
-	<Label>City of the setup</Label>
-	<Select
-		placeholder="Choose city"
-		disabled={!$form.setupState}
-		items={formattedCities}
-		bind:value={$form.setupCity}
-		name="setupCity"
-		color={$errors.setupCity && 'red'}
-	/>
-	{#if $errors.setupCity}
-		<Helper color="red">{$errors.setupCity}</Helper>
-	{/if}
-</div>
-
-<div class="space-y-4">
-	<Label>Setup Address</Label>
-	<Textarea
-		bind:value={$form.setupAddress}
-		name="setupAddress"
-		color={$errors.setupAddress && 'red'}
-	/>
-	{#if $errors.setupAddress}
-		<Helper color="red">{$errors.setupAddress}</Helper>
 	{/if}
 </div>

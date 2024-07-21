@@ -17,7 +17,7 @@
 	<DisplayError message="Failed to load activity data" />
 {:else}
 	<div class="mx-auto max-w-6xl p-8">
-		<Card class="mx-auto max-w-6xl">
+		<Card class="mx-auto h-[500px] max-w-6xl overflow-y-auto ">
 			<Table>
 				<TableHead>
 					<TableHeadCell>Activity</TableHeadCell>

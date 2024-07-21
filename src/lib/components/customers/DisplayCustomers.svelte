@@ -45,9 +45,7 @@
 				<TableHeadCell>Customer Email</TableHeadCell>
 				<TableHeadCell>Customer phone</TableHeadCell>
 				<TableHeadCell>Customer address</TableHeadCell>
-				<TableHeadCell>Setup state</TableHeadCell>
-				<TableHeadCell>Setup city</TableHeadCell>
-				<TableHeadCell>Setup address</TableHeadCell>
+
 				<TableHeadCell>Actions</TableHeadCell>
 			</TableHead>
 			<TableBody>
@@ -64,9 +62,7 @@
 						<TableBodyCell>{customer.customerEmail}</TableBodyCell>
 						<TableBodyCell>{customer.customerPhone}</TableBodyCell>
 						<TableHeadCell>{customer.customerAddress}</TableHeadCell>
-						<TableHeadCell>{customer.setupState}</TableHeadCell>
-						<TableHeadCell>{customer.setupCity}</TableHeadCell>
-						<TableHeadCell>{customer.setupAddress}</TableHeadCell>
+
 						<TableHeadCell>
 							<div class="flex gap-2">
 								<button class="p-2 hover:bg-white/50">
