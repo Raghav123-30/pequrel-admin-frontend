@@ -24,6 +24,14 @@
 		submitting: customerProductFormSubmitting
 	} = superForm(data.form, {
 		validators: zod(customerProductSchema),
+		onSubmit: () => {
+			toastStore.set({
+				message: '',
+				page: 'customers',
+				show: false,
+				type: 'success'
+			});
+		},
 		onResult: async ({ result }) => {
 			if (result.type == 'redirect') {
 				console.log('setting toast');
@@ -45,6 +53,14 @@
 	});
 	const { form, errors, enhance, message, submitting } = superForm(data.customerProductForm, {
 		validators: zod(productIdSchema),
+		onSubmit: () => {
+			toastStore.set({
+				message: '',
+				page: 'customers',
+				show: false,
+				type: 'success'
+			});
+		},
 		onResult: async ({ result }) => {
 			if (result.type == 'redirect') {
 				console.log('setting toast');
