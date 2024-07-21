@@ -12,10 +12,38 @@
 	import { onDestroy } from 'svelte';
 	import { Toast } from 'flowbite-svelte';
 	import { CheckCircleSolid, ExclamationCircleSolid } from 'flowbite-svelte-icons';
+	import { customerProductSchema } from '$lib/schemas/customerProductSchema';
 
 	export let data: PageData;
 	const { productsData, customerData } = data;
-	const { form, errors, enhance, message, submitting } = superForm(data.form, {
+	const {
+		form: customerProductForm,
+		errors: customerProductFormErrors,
+		enhance: customerProductFormEnhance,
+		message: customerProductFormMessage,
+		submitting: customerProductFormSubmitting
+	} = superForm(data.form, {
+		validators: zod(customerProductSchema),
+		onResult: async ({ result }) => {
+			if (result.type == 'redirect') {
+				console.log('setting toast');
+				toastStore.set({
+					message: 'You have successfully edited product record of your customer ',
+					page: 'customers',
+					show: true,
+					type: 'success'
+				});
+			} else if (result.type == 'error') {
+				toastStore.set({
+					message: 'Failed to edit product record of your customer',
+					page: 'customers',
+					show: true,
+					type: 'error'
+				});
+			}
+		}
+	});
+	const { form, errors, enhance, message, submitting } = superForm(data.customerProductForm, {
 		validators: zod(productIdSchema),
 		onResult: async ({ result }) => {
 			if (result.type == 'redirect') {
@@ -46,6 +74,16 @@
 			});
 		}
 	});
+	customerProductFormMessage.subscribe((value) => {
+		if (value) {
+			toastStore.set({
+				message: value,
+				page: 'customers',
+				show: true,
+				type: 'success'
+			});
+		}
+	});
 	// onDestroy(() => {
 	// 	toastStore.set({
 	// 		page: 'customers',
@@ -61,7 +99,18 @@
 		<IotSection {customerData} {productsData} />
 	</div>
 	<div>
-		<DisplayCustomerProducts {customerData} {productsData} {form} {errors} {enhance} {submitting} />
+		<DisplayCustomerProducts
+			{customerData}
+			{productsData}
+			{form}
+			{errors}
+			{enhance}
+			{submitting}
+			{customerProductForm}
+			{customerProductFormErrors}
+			{customerProductFormSubmitting}
+			{customerProductFormEnhance}
+		/>
 	</div>
 </div>
 

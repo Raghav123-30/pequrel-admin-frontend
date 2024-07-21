@@ -6,6 +6,7 @@ import { getData, putData } from '$lib/server/utils/DataService';
 import type { Customer } from '$lib/models/customer';
 import { message } from 'sveltekit-superforms';
 import type { Configuration } from '$lib/models/configuration';
+import { customerProductSchema } from '$lib/schemas/customerProductSchema';
 
 const productIdSchema = z.object({
 	productId: z.string().min(1, { message: 'Valid product ID is required' })
@@ -13,20 +14,22 @@ const productIdSchema = z.object({
 
 export const load = async () => {
 	const form = await superValidate(zod(productIdSchema));
-
+	const customerProductForm = await superValidate(zod(customerProductSchema));
 	return {
-		form: form
+		form: form,
+		customerProductForm: customerProductForm
 	};
 };
 
 export const actions: Actions = {
 	addProduct: async ({ request, params }) => {
-		const form = await superValidate(request, zod(productIdSchema));
+		const form = await superValidate(request, zod(customerProductSchema));
 		const customerResult = await getData<Customer>(`/api/customers/${params.customerId}`);
 		console.log(customerResult);
 		if (!customerResult.error) {
 			const customerData = customerResult.data;
-			customerData?.productIds?.push(form.data.productId);
+
+			customerData?.customerProducts.push({ ...form.data });
 			customerData?.setupConfigurations?.push({
 				productId: form.data.productId,
 				configuration: {} as Configuration
@@ -60,13 +63,13 @@ export const actions: Actions = {
 					status: 403
 				});
 			} else {
-				customerData!.productIds = customerData?.productIds?.filter(
-					(productId) => productId != form.data.productId
+				customerData!.customerProducts = customerData!.customerProducts!.filter(
+					(customerProduct) => customerProduct.productId != form.data.productId
 				);
 				customerData!.setupConfigurations = customerData!.setupConfigurations?.filter(
 					(item) => item.productId != form.data.productId
 				);
-				console.log(customerData?.productIds);
+
 				console.log(form.data.productId);
 				const updatedCustomerResult = await putData(
 					`/api/customers/${params.customerId}`,

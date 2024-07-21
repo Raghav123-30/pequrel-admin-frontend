@@ -10,6 +10,12 @@
 	import toastStore from '$lib/stores/toastStore.js';
 	import { Toast } from 'flowbite-svelte';
 	import { ExclamationCircleSolid, CheckCircleSolid } from 'flowbite-svelte-icons';
+	const customerCrops = cropssData.filter((item) =>
+		customerData.setupCrops
+			?.filter((cat) => cat.productId === $page.params.productId)
+			.map((cat) => cat.cropId)
+			.includes(item.cropId!)
+	);
 	const product =
 		productsData.find((item) => item.productId == $page.params.productId) || ({} as Product);
 	const { form, errors, submitting, enhance, message } = superForm(data.cropIdform, {
@@ -56,13 +62,15 @@
 
 <div class="mx-auto max-w-6xl px-8">
 	<DisplayCustomerCrops
+		allCrops={cropssData}
 		{product}
-		cropsData={cropssData}
+		cropsData={customerCrops}
 		{form}
 		{customerData}
 		{submitting}
 		{enhance}
 		{errors}
+		productId={$page.params.productId}
 	/>
 </div>
 
