@@ -85,19 +85,6 @@
 			name: item.name
 		};
 	});
-	const getSetupState = (productId: string) => {
-		const setupState = customerData.customerProducts.find(
-			(item) => (item.productId = productId)
-		)?.setupState;
-		return setupState;
-	};
-	const getSetupCity = (productId: string) => {
-		const setupCity = customerData.customerProducts.find(
-			(item) => (item.productId = productId)
-		)?.setupCity;
-		return setupCity;
-	};
-	const customerProducts = customerData.customerProducts;
 </script>
 
 <Card class="mx-auto max-w-6xl px-4">
@@ -215,11 +202,19 @@
 			</div>
 		{:else}
 			<form use:customerProductFormEnhance method="POST" action="?/addProduct">
-				<Select
-					items={productSelectionList}
-					name="productId"
-					bind:value={$customerProductForm.productId}
-				/>
+				<div class="space-y-4">
+					<Label>Select a product</Label>
+					<Select
+						items={productSelectionList}
+						name="productId"
+						bind:value={$customerProductForm.productId}
+					/>
+					{#if $customerProductFormErrors.productId}
+						<Helper color="red">
+							{$customerProductFormErrors.productId}
+						</Helper>
+					{/if}
+				</div>
 				<div class="space-y-4">
 					<Label>State of the setup</Label>
 					<Select
@@ -238,7 +233,7 @@
 						name="setupState"
 						color={$customerProductFormErrors.setupState && 'red'}
 					/>
-					{#if $errors.setupState}
+					{#if $customerProductFormErrors.setupState}
 						<Helper color="red">{$customerProductFormErrors.setupState}</Helper>
 					{/if}
 				</div>
@@ -252,7 +247,7 @@
 						name="setupCity"
 						color={$customerProductFormErrors.setupCity && 'red'}
 					/>
-					{#if $errors.setupCity}
+					{#if $customerProductFormErrors.setupCity}
 						<Helper color="red">{$customerProductFormErrors.setupCity}</Helper>
 					{/if}
 				</div>
@@ -264,7 +259,7 @@
 						name="setupAddress"
 						color={$customerProductFormErrors.setupAddress && 'red'}
 					/>
-					{#if $errors.setupAddress}
+					{#if $customerProductFormErrors.setupAddress}
 						<Helper color="red">{$customerProductFormErrors.setupAddress}</Helper>
 					{/if}
 				</div>
